@@ -1,11 +1,12 @@
 import Navbar from './Navbar'
-import BannerSection from './BannerSection'
+import LandingPageHeader from './LandingPageHeader'
 
 const Header = () => {
   return (
     <header>
         <Navbar />
-        <BannerSection />
+        <LandingPageHeader />
+        {/* <BannerSection /> */}
     </header>
   )
 }
