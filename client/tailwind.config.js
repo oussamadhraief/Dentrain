@@ -17,7 +17,11 @@ module.exports = {
         darkgray: "#383838",
         trendygreen: "#14B1C0",
         darkertrendygreen: "#0E6378",
-        simplegreen: "#18C5BB"
+        simplegreen: "#18C5BB",
+        lightorange: "#FF6F91",
+        verylighttrendygreen: "#E4FEFF",
+        orange:'#F9BF87',
+        pinky: '#F7B1A2',
       }
     },
   },
