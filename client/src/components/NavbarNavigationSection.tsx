@@ -18,7 +18,7 @@ const NavbarNavigationSection = ({ Scrolled } : {Scrolled: boolean}) => {
     <div className='w-fit h-fit flex flex-nowrap gap-7 items-center'>
         <Link to="/login" className='font-medium text-darkgray'>Login</Link>
         <Link to="/register" className='font-medium bg-trendygreen shadow-tgreen text-white rounded px-4 py-1'>Sign up</Link>
-        {currentLocation.pathname == '/' || Scrolled ? <div className='relative w-7 h-7'>
+        {currentLocation.pathname === '/' || Scrolled ? <div className='relative w-7 h-7'>
           <IconContext.Provider value={{ color: "#383838",className: "w-7 h-7" }}>
             <button onClick={() => setSearching(prev => !prev)}>
               {Searching ? <IoMdClose /> : <AiOutlineSearch />}

@@ -11,7 +11,7 @@ const Header = () => {
   return (
     <header>
         <Navbar />
-        {currentLocation.pathname == '/' ? 
+        {currentLocation.pathname === '/' ? 
         <LandingPageHeader /> 
         : 
         <OtherPagesHeader />}
