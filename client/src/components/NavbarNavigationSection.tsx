@@ -3,32 +3,34 @@ import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { IoMdClose } from 'react-icons/io'
 import { IconContext } from "react-icons";
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Modal from './Modal';
 import { useState } from 'react';
 
-const NavbarNavigationSection = () => {
+const NavbarNavigationSection = ({ Scrolled } : {Scrolled: boolean}) => {
 
   const [Open, setOpen] = useState<boolean>(false)
   const [Searching, setSearching] = useState<boolean>(false)
+  const currentLocation = useLocation()
+  
 
   return (
     <div className='w-fit h-fit flex flex-nowrap gap-7 items-center'>
         <Link to="/login" className='font-medium text-darkgray'>Login</Link>
         <Link to="/register" className='font-medium bg-trendygreen shadow-tgreen text-white rounded px-4 py-1'>Sign up</Link>
-        <div className='relative w-7 h-7'>
+        {currentLocation.pathname == '/' || Scrolled ? <div className='relative w-7 h-7'>
           <IconContext.Provider value={{ color: "#383838",className: "w-7 h-7" }}>
             <button onClick={() => setSearching(prev => !prev)}>
               {Searching ? <IoMdClose /> : <AiOutlineSearch />}
             </button>
-            {Searching ? <div className="slide-bl w-fit h-fit flex flex-nowrap items-center absolute right-0 top-[125%] shadow-xxxl rounded bg-white before:absolute before:content-[''] before:-top-[5px] before:right-2 before:w-3 before:h-3 before:rotate-45 before:bg-white">
+            {Searching ? <form className="slide-bl w-fit h-fit flex flex-nowrap items-center absolute right-0 top-[125%] shadow-xxxl rounded bg-white before:absolute before:content-[''] before:-top-[5px] before:right-2 before:w-3 before:h-3 before:rotate-45 before:bg-white">
               <input type="text" value="" placeholder='Search a product' className='h-10 w-72 flex-1 px-1 rounded-l-xl outline-none'/>
               <Link to="/search">
                 <AiOutlineSearch />
               </Link>
-            </div> : null}
+            </form> : null}
           </IconContext.Provider>
-        </div>
+        </div> : null}
         
         <IconContext.Provider value={{ color: "#383838",className: "w-7 h-7" }}>
         <Link to="/cart">

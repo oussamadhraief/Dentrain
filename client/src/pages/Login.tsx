@@ -16,7 +16,7 @@ const Login = () => {
 
   return (
     <main className="h-fit w-full flex justify-center items-center">
-        <form className="w-1/5 h-fit py-32 grid place-items-center">
+        <form className="w-1/5 h-fit py-24 grid place-items-center">
             <h1 className="w-fit h-fit text-3xl font-bold text-darkertrendygreen mb-7">Login</h1>
             <label className="grid w-full h-fit font-medium text-lg mb-5">
                 Email
