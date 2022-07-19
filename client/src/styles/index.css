@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Fresca&display=swap');
+
 html,body {
   padding: 0;
   margin: 0;
@@ -10,6 +12,10 @@ html,body {
     scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.differentFont {
+  font-family: 'Fresca', sans-serif;
 }
 
 code {
@@ -71,6 +77,27 @@ code {
   100% {
     -webkit-transform: translateY(0) translateX(0);
     transform: translateY(0) translateX(0);
+    opacity: 1;
+  }
+}
+
+.productsDisplayedInFlex {
+  width: calc(25% - 48px);
+}
+
+.removeScrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.fadeInAnimation {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0%{
+    opacity: 0;
+  },
+  100% {
     opacity: 1;
   }
 }

@@ -15,22 +15,22 @@ const BestWomenSellersSection = () => {
         </div>
         <div className='w-full h-fit grid mt-10 place-items-center place-content-center'>
             <div className='w-2/3 h-fit flex justify-center gap-10'>
-                <div className='w-fit h-fit grid place-content-start place-items-start gap-1'>
+                <div className='h-fit grid place-content-start place-items-start gap-1 productsDisplayedInFlex'>
                     <img src={confident} alt="product" className='w-full h-auto' />
                     <h1 className='font-medium hover:underline'>Product name</h1>
                     <h2>80$</h2>
                 </div>
-                <div className='w-fit h-fit grid place-content-start place-items-start gap-1'>
+                <div className='h-fit grid place-content-start place-items-start gap-1 productsDisplayedInFlex'>
                     <img src={medicalScrub} alt="product" className='w-full h-auto' />
                     <h1 className='font-medium hover:underline'>Product name</h1>
                     <h2>80$</h2>
                 </div>
-                <div className='w-fit h-fit grid place-content-start place-items-start gap-1'>
+                <div className='h-fit grid place-content-start place-items-start gap-1 productsDisplayedInFlex'>
                     <img src={confident} alt="product" className='w-full h-auto' />
                     <h1 className='font-medium hover:underline'>Product name</h1>
                     <h2>80$</h2>
                 </div>
-                <div className='w-fit h-fit grid place-content-start place-items-start gap-1'>
+                <div className='h-fit grid place-content-start place-items-start gap-1 productsDisplayedInFlex'>
                     <img src={medicalScrub} alt="product" className='w-full h-auto' />
                     <h1 className='font-medium hover:underline'>Product name</h1>
                     <h2>80$</h2>

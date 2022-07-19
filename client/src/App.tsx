@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import MensCollections from "./pages/collections/MensCollections";
 import WomensCollections from "./pages/collections/WomensCollections";
+import ProductDetails from "./pages/products/ProductDetails";
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="collections" element={<Register />} />
           <Route path="collections/men" element={<MensCollections />} />
           <Route path="collections/women" element={<WomensCollections />} />
+          <Route path="products/:productId" element={<ProductDetails />} />
         </Route>
       </Routes>
     </BrowserRouter> 
