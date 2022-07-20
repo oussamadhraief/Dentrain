@@ -17,6 +17,20 @@ class PostService {
             throw new Error('Unable to create post')
         }
     }
+
+    public async find(): Promise<Post[]> {
+        try {
+            
+            const posts = await this.post.find({})
+
+            return posts
+
+        } catch (error) {
+
+            throw new Error('Unable to fetch posts')
+            
+        }
+    }
 }
 
 export default PostService

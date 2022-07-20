@@ -20,6 +20,11 @@ class PostController implements Controller {
             validationMiddleware(validate.create),
             this.create
         )
+
+        this.router.get(
+            `${this.path}`,
+            this.find
+        )
     }
 
     private create = async (
@@ -33,6 +38,24 @@ class PostController implements Controller {
             const post = await this.PostService.create(title, body)
 
             res.status(201).json({ post })
+        } catch (error) {
+            if(error instanceof Error)
+            next(new HttpException(400, error.message ))
+        }
+    }
+
+    private find = async (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Promise<Response | void> => {
+        
+        try {
+
+            const posts = await this.PostService.find()
+
+            res.status(200).json({ posts })
+
         } catch (error) {
             if(error instanceof Error)
             next(new HttpException(400, error.message ))
