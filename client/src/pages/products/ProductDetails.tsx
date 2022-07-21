@@ -97,7 +97,7 @@ const ProductDetails = () => {
                     </IconContext.Provider>
                 </button>
                 <div className={ExpandedDescription ? "w-full max-h-[1000px] min-w-full transition-all border-b border-zinc-200 pb-5 fadeInAnimation" : "w-full min-w-full max-h-0 transition-all overflow-hidden border-b border-zinc-200"}>
-                    <p className='my-3 fadeInAnimation differentFont font-medium'>Always the perfect fit... we recommend you to choose your size as usual Always the perfect fit... we recommend you to choose your size as usual Always the perfect fit... we recommend you to choose your size as usual</p>
+                    <p className='my-3 fadeInAnimation descriptionFont font-medium'>Always the perfect fit... we recommend you to choose your size as usual Always the perfect fit... we recommend you to choose your size as usual Always the perfect fit... we recommend you to choose your size as usual</p>
                 </div>
             </section>
 
