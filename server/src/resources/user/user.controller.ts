@@ -67,6 +67,7 @@ class UserController implements Controller {
                 password
             )
 
+            res.cookie('jwt', token, { httpOnly: true, maxAge: 5 * 24 * 60 * 60 * 1000})
             res.status(200).json({ token })
         } catch (error: any) {
             next(new HttpException(400, error.message))
@@ -82,6 +83,7 @@ class UserController implements Controller {
         if(!req.user) {
             return next(new HttpException(404, 'No logged in user found'))
         }
+        
         res.status(200).json({ user: req.user })
 
     }

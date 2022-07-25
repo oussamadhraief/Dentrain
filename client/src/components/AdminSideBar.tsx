@@ -14,7 +14,7 @@ type Props = {
 
 const AdminSideBar = ({ SideBarOpen, setSideBarOpen}: Props) => {
   return (
-    <aside className={SideBarOpen ? "w-56 h-full bg-lighterdarktrendygreen grid place-content-start border-t border-trendygreen/30 transition-all overflow-hidden" : "w-0 overflow-hidden transition-all"}>
+    <aside className={SideBarOpen ? "w-56 h-full bg-lighterdarktrendygreen grid place-content-start border-t border-trendygreen/30 transition-all overflow-hidden" : "w-0 h-full overflow-hidden transition-all"}>
         <NavLink to='/admin-dashboard/products/add' className={({ isActive }: {isActive: boolean}) => SideBarOpen ? isActive ? "w-56 h-fit py-3 pl-3.5 transition-all my-1 text-white font-extrabold poppinsFont flex items-center flex-nowrap gap-3 text-sm bg-trendygreen relative before:content-[''] before:h-full before:absolute before:w-1 before:top-0 before:left-0 before:bg-white" : 'w-56 h-fit py-3 pl-3.5 transition-all my-1 text-white/70 font-extrabold poppinsFont flex items-center flex-nowrap gap-3 text-sm hover:text-white hover:bg-darkertrendygreen' : "hidden"}>
             <IconContext.Provider value={{ className: 'w-5 h-5'}}>
                 <AiOutlineAppstoreAdd /> 

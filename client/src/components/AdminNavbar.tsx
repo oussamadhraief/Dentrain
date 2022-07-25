@@ -10,7 +10,7 @@ type Props = {
 
 const AdminNavbar = ({ SideBarOpen, setSideBarOpen}: Props) => {
   return (
-    <nav className='h-14 w-full bg-darkertrendygreen shadow-stylish flex justify-between px-10 items-center flex-nowrap'>
+    <nav className='h-14 py-2 w-full bg-darkertrendygreen shadow-form flex justify-between px-10 items-center flex-nowrap z-50'>
 
             <IconContext.Provider value={{ className: `w-7 h-8`}}>
                 <button className={SideBarOpen ? "text-pinky" : "text-white"} onClick={() => setSideBarOpen(prev => !prev)}>

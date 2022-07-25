@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "react-alice-carousel/lib/alice-carousel.css";
+
 @import url('https://fonts.googleapis.com/css2?family=Fresca&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
 
@@ -104,5 +106,140 @@ code {
   },
   100% {
     opacity: 1;
+  }
+}
+
+.mainAdminSection {
+  height: calc(100% - 56px);
+}
+
+.alice-carousel {
+  position: relative;
+}
+
+.alice-carousel:hover {
+  cursor: grab;
+}
+
+.alice-carousel:active {
+  cursor: grabbing;
+}
+
+.alice-carousel__next-btn-item {
+  position: absolute;
+  top: 50%;
+  right: -8px;
+  transform: translateY(calc(-50% - 42px));
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+  font-size: 18px;
+  display: flex;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  background-color: #383838;
+}
+
+
+.alice-carousel__prev-btn-item {
+  position: absolute;
+  top: 50%;
+  left: -8px;
+  transform: translateY(calc(-50% - 42px));
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+  font-size: 18px;
+  display: flex;
+  font-weight: 600;
+  text-align: center;
+  background-color: #383838;
+}
+
+.alice-carousel__prev-btn-item:hover,.alice-carousel__next-btn-item:hover {
+  transform: translateY(calc(-50% - 42px)) scale(1.1);
+  transition: all;
+  transition-duration: 300ms;
+}
+
+[data-area=">"], [data-area="<"] {
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.alice-carousel__next-btn {
+  display: flex;
+  align-items: center;
+}
+
+.alice-carousel__next-btn-item.__inactive {
+  visibility: hidden;
+}
+
+.alice-carousel__prev-btn-item.__inactive {
+  visibility: hidden;
+}
+
+.dot-overtaking {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  background-color: transparent;
+  color: #14B1C0;
+  margin: -1px 0;
+  box-shadow: 0 -20px 0 0;
+  filter: blur(1px);
+  animation: dotOvertaking 2s infinite cubic-bezier(0.2, 0.6, 0.8, 0.2);
+}
+
+.dot-overtaking::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  background-color: transparent;
+  color: #14B1C0;
+  box-shadow: 0 -20px 0 0;
+  filter: blur(0.5px);
+}
+
+.dot-overtaking::before{
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  background-color: transparent;
+  color: #14B1C0;
+  box-shadow: 0 -20px 0 0;
+  filter: blur(0.5px);
+}
+
+.dot-overtaking::before {
+  animation: dotOvertaking 2s infinite cubic-bezier(0.2, 0.6, 0.8, 0.2);
+  animation-delay: .3s;
+}
+
+.dot-overtaking::after {
+  animation: dotOvertaking 1.5s infinite cubic-bezier(0.2, 0.6, 0.8, 0.2);
+  animation-delay: .6s;
+}
+
+@keyframes dotOvertaking {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(360deg);
   }
 }

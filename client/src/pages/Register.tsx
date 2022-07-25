@@ -1,3 +1,4 @@
+import axios from "axios"
 import React, { useState } from "react"
 import { Link } from 'react-router-dom'
 
@@ -14,9 +15,27 @@ const Register = () => {
         })
     }
 
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
+        try {
+            axios.post("/api/user/register",{
+                email: RegisterForm.email,
+                name: `${RegisterForm.firstName} ${RegisterForm.lastName}`,
+                password: RegisterForm.password
+            },{
+                withCredentials: true
+            }).then(res => {
+                console.log(res);
+                
+            })
+        } catch (error) {
+            
+        }
+    }
+
   return (
     <main className="h-fit w-full flex justify-center items-center">
-        <form className="w-1/5 h-fit py-32 grid place-items-center">
+        <form onSubmit={handleSubmit} className="w-1/5 h-fit py-32 grid place-items-center">
             <h1 className="w-fit h-fit text-3xl font-bold text-darkertrendygreen mb-7">Register</h1>
             <label className="grid w-full h-fit font-medium text-lg mb-5">
                 First Name

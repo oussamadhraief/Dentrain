@@ -25,8 +25,9 @@ const ProductDetails = () => {
     const [ExpandedDescription, setExpandedDescription] = useState(false)
     
     useEffect(() => {
-        if(ImageScrollerRef.current != null)
-      ImageScrollerRef.current.style.height = MainImageRef.current?.offsetHeight + 'px'
+        if(ImageScrollerRef.current && MainImageRef.current )
+        if(MainImageRef.current?.clientHeight >100)
+            ImageScrollerRef.current.style.height = MainImageRef.current?.clientHeight + 'px'
 
     }, [])
     

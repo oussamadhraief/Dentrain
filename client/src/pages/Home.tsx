@@ -3,8 +3,73 @@ import NewestProductsSection from "../components/NewestProductsSection"
 import LatestCollectionSection from "../components/LatestCollectionSection"
 import BestWomenSellersSection from "../components/BestWomenSellersSection"
 import BestMenSellersSection from "../components/BestMenSellersSection"
+import confident from '../assets/confident.jpg'
+import medicalScrub from '../assets/medicalScrub.jpg'
+import React, { useEffect } from 'react';
+import AliceCarousel from 'react-alice-carousel';
+import 'react-alice-carousel/lib/alice-carousel.css';
+import axios from "axios"
+
+
+
 
 const Home = () => {
+
+
+  useEffect(() => {
+     const getUser = async () => {
+       try {
+         const res = await axios.get('/api/user',{
+           withCredentials: true
+         }).then((res) => {
+
+           console.log(res);
+         })
+         
+         
+       } catch (error) {
+         
+       }
+     }
+     getUser()
+  },[])
+
+  const handleDragStart = (e: React.FormEvent) => e.preventDefault();
+
+
+  
+const items = [
+  <div onDragStart={handleDragStart} role="presentation" className='px-3'>
+        <img src={confident}  />
+        <h1 className='font-medium hover:underline mt-1.5 mb-1'>Product name</h1>
+        <h2>80$</h2>
+    </div>,
+  <div onDragStart={handleDragStart} role="presentation" className='px-3'>
+  <img src={medicalScrub}  />
+  <h1 className='font-medium hover:underline mt-1.5 mb-1'>Product name</h1>
+  <h2>80$</h2>
+</div>,
+  <div onDragStart={handleDragStart} role="presentation" className='px-3'>
+  <img src={confident}  />
+  <h1 className='font-medium hover:underline mt-1.5 mb-1'>Product name</h1>
+  <h2>80$</h2>
+</div>,
+<div onDragStart={handleDragStart} role="presentation" className='px-3'>
+<img src={medicalScrub}  />
+<h1 className='font-medium hover:underline mt-1.5 mb-1'>Product name</h1>
+<h2>80$</h2>
+</div>,<div onDragStart={handleDragStart} role="presentation" className='px-3'>
+        <img src={confident}  />
+        <h1 className='font-medium hover:underline mt-1.5 mb-1'>Product name</h1>
+        <h2>80$</h2>
+    </div>,
+  <div onDragStart={handleDragStart} role="presentation" className='px-3'>
+  <img src={medicalScrub}  />
+  <h1 className='font-medium hover:underline mt-1.5 mb-1'>Product name</h1>
+  <h2>80$</h2>
+</div>,
+];
+
   return (
     <main>
         <NewestProductsSection />
@@ -12,6 +77,25 @@ const Home = () => {
         <LatestCollectionSection />
         <BestWomenSellersSection />
         <BestMenSellersSection />
+        <div className="w-8/12 h-fit mx-auto">
+          <AliceCarousel
+            mouseTracking 
+            items={items} 
+            responsive={ {
+              0: {
+                items: 2,
+                          },
+                          640: {
+                              items: 3
+                          },
+                          1024: {
+                              items: 4,
+                          }
+                        }}
+            disableDotsControls
+            animationType="slide"
+          />
+        </div>
     </main>
   )
 }
