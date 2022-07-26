@@ -7,21 +7,35 @@ import { Link, useLocation } from 'react-router-dom'
 import Modal from './Modal';
 import { useEffect, useState } from 'react';
 import useAuth from '../hooks/useAuth';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const NavbarNavigationSection = ({ Scrolled } : {Scrolled: boolean}) => {
 
-  const { Auth } = useAuth()
+  const { Auth,setAuth } = useAuth()
+  const navigate = useNavigate()
 
   const [Open, setOpen] = useState<boolean>(false)
   const [Searching, setSearching] = useState<boolean>(false)
   const currentLocation = useLocation()
   
+  const handleLogout = () => {
+    axios.get('/api/user/logout',{
+      withCredentials: true
+    }).then(() => {
+        setAuth(null)
+        navigate('/login')
+    })
+  }
 
   return (
     <div className='w-fit h-fit flex flex-nowrap gap-7 items-center'>
 
         {Auth?.user ? 
-        <p className='font-medium text-darkgray'>{Auth?.user?.name}</p>
+        <>
+          <p className='font-medium text-darkgray'>{Auth?.user?.name}</p>
+          <button onClick={handleLogout}>Logout</button>
+        </>
         :
         <>
           <Link to="/login" className='font-medium text-darkgray'>Login</Link>

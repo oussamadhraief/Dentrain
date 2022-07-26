@@ -10,18 +10,25 @@ import ProductDetails from "./pages/products/ProductDetails";
 import AddProduct from "./pages/admin-dashboard/products/AddProduct";
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import RequiredAuth from "./components/RequiredAuth";
+import useAuth from "./hooks/useAuth";
 
 function App() {
+
+  const { Auth } = useAuth()
+
   return (
     <BrowserRouter>
       <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
+            {Auth?.user ? null
+            :
+            <>
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+            </>}
           <Route element={<RequiredAuth allowedRoles={['user','admin']} />}>
             <Route path="contact" element={<Contact />} />
-            <Route path="register" element={<Register />} />
             <Route path="collections" element={<Register />} />
             <Route path="collections/men" element={<MensCollections />} />
             <Route path="collections/women" element={<WomensCollections />} />
@@ -32,13 +39,13 @@ function App() {
           <Route path="admin-dashboard" element={<AdminLayout />}>
             <Route index element={<Home />} />
             <Route path="products/add" element={<AddProduct />} />
-            <Route path="register" element={<Register />} />
             <Route path="collections" element={<Register />} />
             <Route path="collections/men" element={<MensCollections />} />
             <Route path="collections/women" element={<WomensCollections />} />
             <Route path="products/:productId" element={<ProductDetails />} />
           </Route>
         </Route>
+        <Route path="*" element={<p>error</p>} />
       </Routes>
     </BrowserRouter> 
   )

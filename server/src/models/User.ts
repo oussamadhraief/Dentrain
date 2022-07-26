@@ -12,8 +12,7 @@ const UserSchema = new mongoose.Schema({
         required: true
     },
     phone: {
-        type: String,
-        unique: true,
+        type: String
     },
     password: {
         type: String
@@ -25,4 +24,4 @@ const UserSchema = new mongoose.Schema({
     }
 })
 
-export default mongoose.model('TempUser', UserSchema)
+export default mongoose.model('TempUtilisateur', UserSchema)

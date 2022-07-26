@@ -30,9 +30,8 @@ const Login = () => {
             {
                 withCredentials: true
             }).then(res => {
-                console.log(res);
-                
-                navigate('/')
+                setAuth({user: res?.data?.user})
+                navigate(from, { replace: true })
             })
           
     }

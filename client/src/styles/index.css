@@ -191,7 +191,6 @@ code {
   color: #14B1C0;
   margin: -1px 0;
   box-shadow: 0 -20px 0 0;
-  filter: blur(1px);
   animation: dotOvertaking 2s infinite cubic-bezier(0.2, 0.6, 0.8, 0.2);
 }
 
@@ -207,7 +206,6 @@ code {
   background-color: transparent;
   color: #14B1C0;
   box-shadow: 0 -20px 0 0;
-  filter: blur(0.5px);
 }
 
 .dot-overtaking::before{
@@ -222,7 +220,6 @@ code {
   background-color: transparent;
   color: #14B1C0;
   box-shadow: 0 -20px 0 0;
-  filter: blur(0.5px);
 }
 
 .dot-overtaking::before {

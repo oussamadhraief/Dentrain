@@ -33,7 +33,7 @@ export const AuthProvider = (props: PropsWithChildren<any>) => {
 
               setAuth({user: res?.data?.user})
               setLoading(false)
-            })
+            }).catch(() => setLoading(false))
             
      },[])
 

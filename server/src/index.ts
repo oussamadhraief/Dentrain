@@ -7,7 +7,7 @@ import passport from 'passport'
 import passportLocal from 'passport-local'
 import bcrypt from 'bcryptjs'
 import 'dotenv/config'
-import TempUser from './models/User'
+import TempUtilisateur from './models/User'
 import { UserInterface } from 'interfaces/user.interface'
 import bodyParser from 'body-parser'
 
@@ -41,7 +41,7 @@ import bodyParser from 'body-parser'
     
     //Passport
     passport.use(new LocalStrategy({usernameField: "email", passwordField: "password"},( email, password, done ) => {
-        TempUser.findOne({ email }, (err: any, user: any ) => {
+        TempUtilisateur.findOne({ email }, (err: any, user: any ) => {
             
             if(err) throw err
             if(!user) return done(null,false)
@@ -61,7 +61,7 @@ import bodyParser from 'body-parser'
     })
 
     passport.deserializeUser((id: string, cb) => {
-        TempUser.findOne({ _id: id }, (err:any, user: any)  => {
+        TempUtilisateur.findOne({ _id: id }, (err:any, user: any)  => {
             const userInformation = {
                 email: user.email,
                 phone: user.phone,
@@ -83,12 +83,12 @@ import bodyParser from 'body-parser'
             res.status(400).json({ success: false })
         }
 
-        TempUser.findOne({ email } , async (err: Error, doc: UserInterface) => {
+        TempUtilisateur.findOne({ email } , async (err: Error, doc: UserInterface) => {
             if(err) throw err
             if(doc) res.send("User Already Exists")
             if(!doc) {
                 const hashedPassword = await bcrypt.hash(password, 10)
-                const newUser = new TempUser({
+                const newUser = new TempUtilisateur({
                     name,
                     email,
                     password: hashedPassword
@@ -105,9 +105,9 @@ import bodyParser from 'body-parser'
         res.status(200).json({ success: true , user: req.user })
     })
 
-    app.post('/api/user/logout', async ( req: Request, res: Response, done ) => { 
-        req.logOut(done)
-        res.status(204).end()
+    app.get('/api/user/logout', async ( req: Request, res: Response, done ) => { 
+        req.logout(done)
+        res.status(204).json({ success: true })
     })
 
     app.get('/api/user', (req,res) => {
