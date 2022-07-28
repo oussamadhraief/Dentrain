@@ -32,6 +32,8 @@ export const AuthProvider = (props: PropsWithChildren<any>) => {
             }).then((res) => {
 
               setAuth({user: res?.data?.user})
+              console.log(res?.data?.user);
+              
               setLoading(false)
             }).catch(() => setLoading(false))
             

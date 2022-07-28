@@ -2,11 +2,12 @@ import confident from '../../assets/confident.jpg'
 import medicalScrub from '../../assets/medicalScrub.jpg'
 
 const MensCollections = () => {
+    
   return (
     <main className='w-full h-fit py-20 flex flex-nowrap justify-evenly'>
         <aside className='w-2/12 h-fit'>
-            <input type="checkbox" name="availability" id="" />
-            <input type="text" name="price" id="" />
+            <input type="checkbox" name="availability" />
+
         </aside>
         <section className='w-9/12 h-fit flex flex-wrap justify-start gap-12'>
                 <div className='h-fit grid place-content-start place-items-start gap-1 productsDisplayedInFlex'>

@@ -8,10 +8,12 @@ import MensCollections from "./pages/collections/MensCollections";
 import WomensCollections from "./pages/collections/WomensCollections";
 import ProductDetails from "./pages/products/ProductDetails";
 import AddProduct from "./pages/admin-dashboard/products/AddProduct";
+import AccountSettings from "./pages/account/AccountSettings";
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import RequiredAuth from "./components/RequiredAuth";
 import useAuth from "./hooks/useAuth";
 import AdminDashboard from "./pages/admin-dashboard/AdminDashboard";
+import UserDashboardLayout from "./components/UserDashboardLayout";
 
 function App() {
 
@@ -28,12 +30,18 @@ function App() {
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
             </>}
-          <Route element={<RequiredAuth allowedRoles={['user','admin']} />}>
-            <Route path="contact" element={<Contact />} />
             <Route path="collections" element={<Register />} />
             <Route path="collections/men" element={<MensCollections />} />
             <Route path="collections/women" element={<WomensCollections />} />
             <Route path="products/:productId" element={<ProductDetails />} />
+            <Route path="contact" element={<Contact />} />
+          <Route element={<RequiredAuth allowedRoles={['user','admin']} />}>
+            <Route path="cart" element={<p>cart</p>} />
+            <Route path='account' element={<UserDashboardLayout />}>
+              <Route path="orders" element={<AccountSettings />} />
+              <Route path="wishlist" element={<AccountSettings />} />
+              <Route path="settings" element={<AccountSettings />} />
+            </Route>
           </Route>
         </Route>
         <Route element={<RequiredAuth allowedRoles={['user','admin']} />}>

@@ -7,14 +7,15 @@ import passport from 'passport'
 import passportLocal from 'passport-local'
 import bcrypt from 'bcryptjs'
 import 'dotenv/config'
-import TempUtilisateur from './models/User'
-import { UserInterface } from './utils/interfaces/user.interface'
+import TempUtilisateur from './resources/user/user.model'
+import { UserInterface } from './resources/user/user.interface'
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import morgan from 'morgan';
 import ErrorMiddleware from './middleware/error.middleware';
 import helmet from 'helmet';
 import PostController from './resources/post/post.controller'
+import UserNameController from './resources/user/update-name/username.controller'
 
 
 
@@ -76,6 +77,7 @@ import PostController from './resources/post/post.controller'
     passport.deserializeUser((id: string, cb) => {
         TempUtilisateur.findOne({ _id: id }, (err:any, user: any)  => {
             const userInformation = {
+                id: user._id,
                 email: user.email,
                 phone: user.phone,
                 name: user.name,
@@ -124,13 +126,15 @@ import PostController from './resources/post/post.controller'
         res.status(204).json({ success: true })
     })
     
-    app.get('/api/user', (req,res) => {
+    app.get('/api/user', ( req: Request, res: Response ) => {
         if(req.isAuthenticated())
-        {res.status(200).json({success: true, message: 'user found', user: req.user, session: req.sessionID })}
+        {res.status(200).json({success: true, message: 'user found', user: req.user , session: req.sessionID })}
         else{ res.status(401).json({ success: false })}
     })
     
     app.use('/api', new PostController().router)
+
+    app.use('/api', new UserNameController().router)
 
 
     app.listen(process.env.PORT, () => {

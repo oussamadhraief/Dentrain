@@ -20,6 +20,7 @@ const NavbarNavigationSection = ({ Scrolled } : {Scrolled: boolean}) => {
   const [Searching, setSearching] = useState<boolean>(false)
   const [MenSectionOpen, setMenSectionOpen] = useState<boolean>(false)
   const [WomenSectionOpen, setWomenSectionOpen] = useState<boolean>(false)
+  const [Show, setShow] = useState<boolean>(false)
   const currentLocation = useLocation()
   
   const handleLogout = () => {
@@ -48,8 +49,24 @@ const NavbarNavigationSection = ({ Scrolled } : {Scrolled: boolean}) => {
 
         {Auth?.user ? 
         <>
-          <p className='font-medium text-darkgray'>{Auth?.user?.name}</p>
-          <button onClick={handleLogout}>Logout</button>
+          <button onClick={() => setShow(prev => !prev)} className='relative font-medium text-darkgray hover:cursor-pointer w-fit h-fit flex items-center gap-1 border border-darkgray rounded-full hover:bg-zinc-100 pl-4 pr-2 py-0.5'>
+            <span>{Auth?.user?.name}</span>
+
+            <IconContext.Provider value={{ className: 'w-5 h-4 mt-[2px]'}}>
+
+                        <IoIosArrowDown />
+
+                    </IconContext.Provider>
+                    
+              {Show && <div className='absolute left-1/2 -translate-x-1/2 mx-auto top-[125%] h-fit bg-white shadow-float grid w-52 rounded px-1.5'>
+                <Link className='w-full h-fit text-center py-1 border-b hover:underline' to='/'>Home</Link>
+                <Link className='w-full h-fit text-center py-1 border-b hover:underline' to='/account/orders'>My orders</Link>
+                <Link className='w-full h-fit text-center py-1 border-b hover:underline' to='/account/wishlist'>My wishlist</Link>
+                <Link className='w-full h-fit text-center py-1 border-b hover:underline' to='/account/settings'>Settings</Link>
+                <div onClick={handleLogout} className="w-full h-fit text-center py-1 hover:underline text-red-500">Logout</div>
+              </div>}
+          </button>
+
         </>
         :
         <>
@@ -63,8 +80,8 @@ const NavbarNavigationSection = ({ Scrolled } : {Scrolled: boolean}) => {
             <button onClick={() => setSearching(prev => !prev)}>
               {Searching ? <IoMdClose /> : <AiOutlineSearch />}
             </button>
-            {Searching ? <form className="slide-bl w-fit h-fit flex flex-nowrap items-center absolute right-0 top-[125%] shadow-xxxl rounded bg-white before:absolute before:content-[''] before:-top-[5px] before:right-2 before:w-3 before:h-3 before:rotate-45 before:bg-white">
-              <input type="text" value="" placeholder='Search a product' className='h-10 w-72 flex-1 px-1 rounded-l-xl outline-none'/>
+            {Searching ? <form className="slide-bl w-fit h-fit flex flex-nowrap items-center absolute right-0 top-[125%] px-3 py-1 shadow-xxxl rounded bg-white before:absolute before:content-[''] before:-top-[5px] before:right-2 before:w-3 before:h-3 before:rotate-45 before:bg-white">
+              <input type="text" value="" placeholder='Search a product' className='h-14 w-96 flex-1 px-1 rounded-l-xl outline-none'/>
               <Link to="/search">
                 <AiOutlineSearch />
               </Link>
