@@ -11,6 +11,7 @@ import AddProduct from "./pages/admin-dashboard/products/AddProduct";
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import RequiredAuth from "./components/RequiredAuth";
 import useAuth from "./hooks/useAuth";
+import AdminDashboard from "./pages/admin-dashboard/AdminDashboard";
 
 function App() {
 
@@ -37,7 +38,7 @@ function App() {
         </Route>
         <Route element={<RequiredAuth allowedRoles={['user','admin']} />}>
           <Route path="admin-dashboard" element={<AdminLayout />}>
-            <Route index element={<Home />} />
+            <Route index element={<AdminDashboard />} />
             <Route path="products/add" element={<AddProduct />} />
             <Route path="collections" element={<Register />} />
             <Route path="collections/men" element={<MensCollections />} />

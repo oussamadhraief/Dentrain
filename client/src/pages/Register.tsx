@@ -1,9 +1,15 @@
 import axios from "axios"
 import React, { useState } from "react"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+import useAuth from "../hooks/useAuth"
 
 
 const Register = () => {
+
+    const navigate = useNavigate()
+    const location:any = useLocation()
+    const from = location.state?.from?.pathname || '/'
+    const { setAuth } = useAuth()
 
     const [RegisterForm, setRegisterForm] = useState({firstName: '', lastName: '', email: '', password: ''})
 
@@ -25,7 +31,16 @@ const Register = () => {
             },{
                 withCredentials: true
             }).then(res => {
-                console.log(res);
+                axios.post(`/api/user/login`,{
+                    email: RegisterForm.email,
+                    password: RegisterForm.password
+                },
+                {
+                    withCredentials: true
+                }).then(res => {
+                    setAuth({user: res?.data?.user})
+                    navigate(from, { replace: true })
+                })
                 
             })
         } catch (error) {
@@ -35,7 +50,7 @@ const Register = () => {
 
   return (
     <main className="h-fit w-full flex justify-center items-center">
-        <form onSubmit={handleSubmit} className="w-1/5 h-fit py-32 grid place-items-center">
+        <form onSubmit={handleSubmit} className="w-1/5 h-fit py-20 grid place-items-center">
             <h1 className="w-fit h-fit text-3xl font-bold text-darkertrendygreen mb-7">Register</h1>
             <label className="grid w-full h-fit font-medium text-lg mb-5">
                 First Name

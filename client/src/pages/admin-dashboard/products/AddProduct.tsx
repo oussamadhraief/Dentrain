@@ -71,23 +71,23 @@ const AddProduct = () => {
 
 
     return (
-        <main className="w-full h-full overflow-auto">
+        <main className="flex-1 h-full overflow-auto">
             <form className="w-full h-fit overflow-auto py-6 px-3 flex flex-nowrap justify-center items-start gap-8 mb-20">
-                <div className="w-1/3 h-fit flex flex-nowrap justify-center items-start gap-5">
-                    <section>
-                        {ProductImages.map((item,index) => 
-                        <div key={`pic${index}`} onClick={() => handleSetMainImage(index)} className={index == MainImage ? "relative w-fit h-fit group before:content-[''] before:inset-0 before:border-[3px] before:border-trendygreen before:absolute" : "relative w-fit h-fit group rounded"}>
-                            
-                            <img src={item} className="w-28 h-auto mb-5 rounded" />
-                            <button type="button" onClick={e => handleRemoveProductImage(e,index)} className="w-4 h-4 absolute -top-1 -right-1 bg-red-500 rounded-full items-center pb-0.5 justify-center font-medium text-xs font-mono text-white hidden group-hover:flex">
-                                x
-                            </button>
+                <div className="w-1/3 h-fit flex flex-nowrap justify-end items-start gap-5 relative overflow-hidden">
+                        <div className="productSideImageContainer removeScrollbar">
+                            {ProductImages.map((item,index) => 
+                            <div key={`pic${index}`} onClick={() => handleSetMainImage(index)} className={index == MainImage ? "relative w-fit h-fit group before:content-[''] before:inset-0 before:border-[3px] before:border-trendygreen before:absolute" : "relative w-fit h-fit group rounded"}>
+                                
+                                <img src={item} className="w-28 h-auto mb-5 rounded" />
+                                <button type="button" onClick={e => handleRemoveProductImage(e,index)} className="w-4 h-4 absolute top-0 right-0 bg-red-500 rounded-full items-center pb-0.5 justify-center font-medium text-xs font-mono text-white hidden group-hover:flex">
+                                    x
+                                </button>
 
+                            </div>
+                            )}
+                            <input type="file" name="image" className="relative flex py-5 overflow-hidden w-28 h-[165px] before:content-['+'] before:absolute before:inset-0 before:z-10 before:bg-verylighttrendygreen before:border-[1px] before:border-[#5abdbf] before:rounded before:flex before:items-center before:justify-center before:text-[#5abdbf] before:text-2xl before:hover:cursor-pointer" onChange={handleImageInput} />
                         </div>
-                        )}
-                        <input type="file" name="image" className="relative flex py-5 overflow-hidden w-28 h-[165px] before:content-['+'] before:absolute before:inset-0 before:z-10 before:bg-verylighttrendygreen before:border-[1px] before:border-[#5abdbf] before:rounded before:flex before:items-center before:justify-center before:text-[#5abdbf] before:text-2xl before:hover:cursor-pointer" onChange={handleImageInput} />
-                    </section>
-                    <div className="flex-1">
+                    <div className="productMainImageContainer">
                     {ProductImages.length > 0 ? 
                     <Zoom>
                         <img src={ProductImages[MainImage]} alt="product" className='w-full h-auto' />
@@ -189,12 +189,12 @@ const AddProduct = () => {
             </form>
 
             <div className="h-fit w-full py-20 flex flex-nowrap justify-center gap-10 items-start">
-                <div className='w-4/12 h-fit flex flex-nowrap justify-between items-start gap-4 overflow-hidden'>
+                <div className='w-4/12 h-fit flex flex-nowrap justify-end items-start gap-5 overflow-hidden relative'>
 
-                    <div ref={ImageScrollerRef} className='w-28 grid place-content-start gap-5 overflow-auto scroll-smooth removeScrollbar'>
+                    <div ref={ImageScrollerRef} className='productSideImageContainer grid place-content-start gap-5 removeScrollbar scroll-smooth'>
                             {ProductInfo.ProductImages.map((element,index) => <button className={index === MainImage ? "relative before:content-[''] before:inset-0 before:border-2 before:border-black before:absolute" : ""} onClick={() => handleChangeMainImage(index)}><img src={element} alt="product" className='w-full h-auto' /></button>)}
                     </div>
-                    <div className='flex-1'>
+                    <div className='productMainImageContainer'>
 
                         <Zoom>
                             <img src={ProductInfo.ProductImages[MainImage]} alt="product" className='w-full h-auto' />

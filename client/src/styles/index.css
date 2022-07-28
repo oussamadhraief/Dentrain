@@ -240,3 +240,21 @@ code {
     transform: rotateZ(360deg);
   }
 }
+
+.productMainImageContainer {
+  /* position: absolute;
+  top: 0;
+  right: 0; */
+  width: calc(100% - 132px);
+  height: auto;
+}
+
+.productSideImageContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: calc(100% - 6px);
+  width: 112px;
+  overflow-y: auto;
+  overflow-x: visible;
+}

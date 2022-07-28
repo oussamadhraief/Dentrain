@@ -5,34 +5,14 @@ import BestWomenSellersSection from "../components/BestWomenSellersSection"
 import BestMenSellersSection from "../components/BestMenSellersSection"
 import confident from '../assets/confident.jpg'
 import medicalScrub from '../assets/medicalScrub.jpg'
-import React, { useEffect } from 'react';
+import React from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
-import axios from "axios"
 
 
 
 
 const Home = () => {
-
-
-  useEffect(() => {
-     const getUser = async () => {
-       try {
-         const res = await axios.get('/api/user',{
-           withCredentials: true
-         }).then((res) => {
-
-           console.log(res);
-         })
-         
-         
-       } catch (error) {
-         
-       }
-     }
-     getUser()
-  },[])
 
   const handleDragStart = (e: React.FormEvent) => e.preventDefault();
 
