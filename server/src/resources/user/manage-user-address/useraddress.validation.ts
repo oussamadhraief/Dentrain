@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const update = Joi.object({
+const create = Joi.object({
     address: Joi.string().required(),
     detailedAddress: Joi.string(),
     company: Joi.string(),
@@ -11,4 +11,4 @@ const update = Joi.object({
     defaultAddress: Joi.boolean().required(),
 });
 
-export default { update };
+export default { create };

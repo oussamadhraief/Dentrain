@@ -16,7 +16,7 @@ import ErrorMiddleware from './middleware/error.middleware';
 import helmet from 'helmet';
 import PostController from './resources/post/post.controller'
 import UserInfoController from './resources/user/update-user-info/userinfo.controller'
-import UserAddressController from './resources/user/add-user-address/useraddress.controller'
+import UserAddressController from './resources/user/manage-user-address/useraddress.controller'
 
 
 

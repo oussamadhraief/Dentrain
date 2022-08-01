@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios"
+import axios, { AxiosError, AxiosResponse } from "axios"
 import React, { useEffect, useRef, useState } from "react"
 import useAuth from "../../hooks/useAuth"
 import { IoIosArrowDown } from 'react-icons/io'
@@ -24,9 +24,6 @@ interface UserAddress {
 }
 
 const AccountSettings = () => {
-
-    const updateAddressInputRef = useRef<HTMLInputElement>(null)
-    const addAddressInputRef = useRef<HTMLInputElement>(null)
 
     const { Auth,setAuth } = useAuth()
 
@@ -88,7 +85,7 @@ const AccountSettings = () => {
 
     const handleAddAddressSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        axios.post('/api/user/add-user-address',JSON.stringify(AddNewAddressForm),{
+        axios.post('/api/user/manage-user-address',JSON.stringify(AddNewAddressForm),{
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
@@ -98,6 +95,46 @@ const AccountSettings = () => {
             setAuth({ user : res?.data?.updatedUser })
             setShowAddNewAddressForm(false)
             setAddNewAddressForm({ address: '', detailedAddress: '', zipCode: '', city: '', country: '', company: '', addressName: '', defaultAddress: false })
+        }).catch((error: Error | AxiosError) => {
+            if (axios.isAxiosError(error))  {
+                console.log(error.response?.status);
+                
+            } else {
+              String(error);
+              console.log(error);
+              
+            }
+          })
+    }
+
+
+    const handleUpdateAddressSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
+        axios.patch('/api/user/manage-user-address',JSON.stringify(UpdateAddressForm),{
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            withCredentials: true
+        }).then((res: AxiosResponse)=> {
+            setAuth({ user : res?.data?.updatedUser })
+            setShowUpdateAddressForm(false)
+            setUpdateAddressForm({ address: '', detailedAddress: '', zipCode: '', city: '', country: '', company: '', addressName: '', defaultAddress: false })
+        })
+    }
+
+    const handleDeleteAddress = (addressName: string) => {
+
+        axios.delete('/api/user/manage-user-address/' + addressName ,{
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            withCredentials: true
+        }).then((res: AxiosResponse)=> {
+            setAuth({ user : res?.data?.updatedUser })
+            setShowUpdateAddressForm(false)
+            setUpdateAddressForm({ address: '', detailedAddress: '', zipCode: '', city: '', country: '', company: '', addressName: '', defaultAddress: false })
         })
     }
     
@@ -116,7 +153,7 @@ const AccountSettings = () => {
                 </IconContext.Provider>
             </button>
 
-            <form className={ShowUsernameForm ? "w-fit h-fit pb-14 grid max-h-[1000px] overflow-hidden transition-all duration-700" : "w-fit h-fit grid max-h-0 overflow-hidden transition-all duration-300"} onSubmit={handleSubmit}>
+            <form className={ShowUsernameForm ? "w-fit h-fit pb-14 grid max-h-[1000px] overflow-hidden transition-all duration-300" : "w-fit h-fit grid max-h-0 overflow-hidden transition-all duration-300"} onSubmit={handleSubmit}>
 
 
                 <label className="font-medium text-darkgray grid mt-7 gap-1">Name
@@ -149,7 +186,7 @@ const AccountSettings = () => {
                 </IconContext.Provider>
             </button>
 
-            <form className={ShowUserpasswordForm ? "w-[450px] h-fit pb-14 grid max-h-[1000px] overflow-hidden transition-all duration-700" : "w-[450px] h-fit grid max-h-0 overflow-hidden transition-all duration-300"} onSubmit={handleSubmit}>
+            <form className={ShowUserpasswordForm ? "w-[450px] h-fit pb-14 grid max-h-[1000px] overflow-hidden transition-all duration-300" : "w-[450px] h-fit grid max-h-0 overflow-hidden transition-all duration-300"} onSubmit={handleSubmit}>
 
             <label className="font-medium text-darkgray grid mt-10 gap-1 w-full">Old password
                 <input type="text" name="" value={Userpassword} onChange={e => setUserpassword(e.target.value)} className='w-full h-10 outline-none border border-zinc-300 px-1' />
@@ -186,24 +223,23 @@ const AccountSettings = () => {
                 </IconContext.Provider>
             </button>
 
-            <div className={ShowUseraddressesSection ? "w-full h-fit pb-5 grid max-h-[2000px] overflow-hidden transition-all duration-700" : "w-full h-fit grid max-h-0 overflow-hidden transition-all duration-300"}>
+            <div className={ShowUseraddressesSection ? "w-full h-fit pb-5 grid max-h-[2000px] overflow-hidden transition-all duration-300" : "w-full h-fit grid max-h-0 overflow-hidden transition-all duration-300"}>
                 
 
                 
                 <button onClick={() => {
                     setShowAddNewAddressForm(true)
                     setShowUpdateAddressForm(false)
-                    addAddressInputRef.current?.focus()
                 }} className='h-10 w-fit px-3 font-medium text-white whitespace-nowrap bg-trendygreen rounded shadow-xxxl mx-auto shadow-trendygreen/30 mt-5'>
                     Add address
                 </button>
 
 
-                <form className={ShowAddNewAddressForm ? "w-[450px] h-fit mb-5 grid max-h-[1000px] overflow-hidden transition-all duration-700" : "w-[450px] h-fit grid max-h-0 overflow-hidden transition-all duration-300"} onSubmit={handleAddAddressSubmit}>
+                <form className={ShowAddNewAddressForm ? "w-[450px] h-fit mb-5 grid max-h-[1000px] overflow-hidden transition-all duration-300" : "w-[450px] h-fit grid max-h-0 overflow-hidden transition-all duration-300"} onSubmit={handleAddAddressSubmit}>
 
 
                 <label className="font-medium text-darkgray mt-7 gap-1 w-full">Address
-                    <input ref={addAddressInputRef} type="text" name="address" value={AddNewAddressForm.address} onChange={handleAddAddressFormChange} className='w-full h-10 outline-none border border-zinc-300 px-1' />
+                    <input type="text" name="address" value={AddNewAddressForm.address} onChange={handleAddAddressFormChange} className='w-full h-10 outline-none border border-zinc-300 px-1' />
                 </label>
                 <p className="flex items-center gap-1 font-medium text-sm mt-1">
                     <IconContext.Provider value={{ className: "w-5 h-5"}}>
@@ -277,7 +313,7 @@ const AccountSettings = () => {
 
 
 
-                {Auth?.user?.address.map(item => { return (<address className="w-[450px] h-fit mb-5 grid duration-700 mt-7 font-medium text-sm text-darkgray">
+                {Auth?.user?.address.map(item => { return (<address className="w-[450px] h-fit mb-5 grid duration-300 mt-7 font-medium text-sm text-darkgray">
                     
                     <p className="mb-2 text-base text-darkertrendygreen">{item.addressName} {item.defaultAddress && <span className="text-sm text-darkgray">&#40;Default address&#41;</span>}  </p> 
                     <p>{item.address}</p> 
@@ -291,17 +327,17 @@ const AccountSettings = () => {
                             setShowAddNewAddressForm(false)
                             setShowUpdateAddressForm(true)
                             setUpdateAddressForm({ address: item.address, detailedAddress: item.detailedAddress, zipCode: item.zipCode, city: item.city, country: item.country, company: item.company, addressName: item.addressName, defaultAddress: item.defaultAddress })
-                            updateAddressInputRef.current?.focus()
+                
                         }} className="h-fit w-fit px-2 py-1.5 font-medium text-white whitespace-nowrap bg-darkertrendygreen rounded">Edit address</button>
-                        <button className="h-fit w-fit font-medium text-xs text-red-500 hover:underline whitespace-nowrap">Delete address</button>
+                        <button onClick={() => handleDeleteAddress(item.addressName)} className="h-fit w-fit font-medium text-xs text-red-500 hover:underline whitespace-nowrap">Delete address</button>
                     </div>
                 </address>)})}
             
-                <form className={ShowUpdateAddressForm ? "w-[450px] h-fit mb-5 grid max-h-[1000px] overflow-hidden transition-all duration-700" : "w-[450px] h-fit grid max-h-0 overflow-hidden transition-all duration-300"} onSubmit={handleSubmit}>
+                <form className={ShowUpdateAddressForm ? "w-[450px] h-fit mb-5 grid max-h-[1000px] overflow-hidden transition-all duration-300" : "w-[450px] h-fit grid max-h-0 overflow-hidden transition-all duration-300"} onSubmit={handleUpdateAddressSubmit}>
 
 
                     <label className="font-medium text-darkgray mt-7 gap-1 w-full">Address
-                        <input ref={updateAddressInputRef} type="text" name="address" value={UpdateAddressForm.address} onChange={handleUpdateAddressFormChange} className='w-full h-10 outline-none border border-zinc-300 px-1' />
+                        <input  type="text" name="address" value={UpdateAddressForm.address} onChange={handleUpdateAddressFormChange} className='w-full h-10 outline-none border border-zinc-300 px-1' />
                     </label>
                     <p className="flex items-center gap-1 font-medium text-sm mt-1">
                         <IconContext.Provider value={{ className: "w-5 h-5"}}>
@@ -348,8 +384,9 @@ const AccountSettings = () => {
                         <input type="text" name="company" value={UpdateAddressForm.company} onChange={handleUpdateAddressFormChange} className='w-full h-10 outline-none border border-zinc-300 px-1' />
                     </label>
 
-                    <label className="font-medium text-darkgray mt-10 gap-1 w-full">Address name
-                        <input type="text" name="addressName" value={UpdateAddressForm.addressName} onChange={handleUpdateAddressFormChange} className='w-full h-10 outline-none border border-zinc-300 px-1' />
+                    <label className="relative font-medium text-darkgray mt-10 gap-1 w-full group">Address name
+                        <input type="text" name="addressName" disabled value={UpdateAddressForm.addressName} className='w-full bg-zinc-200 text-zinc-600 hover:cursor-not-allowed h-10 outline-none border border-zinc-300 px-1' />
+                        <p className="hidden group-hover:block absolute top-[110%] left-1/2 -translate-x-1/2 h-fit w-fit text-sm font-normal bg-red-200 text-red-500 px-2 py-1 rounded z-10 before:absolute before:left-1/2 before:-translate-x-1/2 before:w-3 before:h-3 before:bg-red-200 before:-top-1 before:rotate-45">Sorry, you can't edit the name of this address</p>
                     </label>
 
                     <label className="font-medium text-sm text-darkgray mt-7 gap-1 w-fit flex whitespace-nowrap items-center">
