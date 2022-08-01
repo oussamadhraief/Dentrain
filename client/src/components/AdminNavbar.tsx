@@ -48,7 +48,7 @@ const AdminNavbar = ({ SideBarOpen, setSideBarOpen}: Props) => {
             </form>
             <div className='w-fit h-fit relative'>
 
-                <button className='w-fit h-fit flex flex-nowrap items-center gap-2 text-white bg-lighterdarktrendygreen px-2 py-1 rounded-xl font-medium' onClick={() => setOpen(prev => !prev)}>
+                <button className='w-fit h-fit flex flex-nowrap items-center gap-2 text-white bg-lighterdarktrendygreen pl-6 pr-5 py-1 rounded-full font-medium' onClick={() => setOpen(prev => !prev)}>
                     <span>{Auth?.user?.name}</span>
 
                     <IconContext.Provider value={{ className: 'w-5 h-4'}}>

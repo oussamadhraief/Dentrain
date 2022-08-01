@@ -34,23 +34,31 @@ const ProductDetails = () => {
 
     const handleChangeMainImage = (index: number) => {
         setMainImage(index)
-
         ImageScrollerRef.current?.scroll(0,(index -1)  * 188 + 40)
+        if(MainImageRef.current)
+            MainImageRef.current.style.transform = `translateX(-${index}00%)`
 
     }
 
   return (
     <main className='h-fit w-full py-20 flex flex-nowrap justify-center gap-10 items-start'>
-        <div className='w-4/12 h-fit flex flex-nowrap justify-between items-start gap-4 overflow-hidden'>
+        <div className='w-1/3 h-fit flex flex-nowrap justify-end items-start gap-5 relative overflow-hidden'>
 
-                <div ref={ImageScrollerRef} className='w-28 grid place-content-start gap-5 overflow-auto scroll-smooth removeScrollbar'>
+                <div ref={ImageScrollerRef} className='productSideImageContainer grid place-content-start gap-5 removeScrollbar scroll-smooth'>
                         {ProductInfo.ProductImages.map((element,index) => <button className={index === MainImage ? "relative before:content-[''] before:inset-0 before:border-2 before:border-black before:absolute" : ""} onClick={() => handleChangeMainImage(index)}><img src={element} alt="product" className='w-full h-auto' /></button>)}
                 </div>
-                <div ref={MainImageRef} className='flex-1'>
+                <div  className='productMainImageContainer removeScrollbar overflow-hidden'>
+                    <div ref={MainImageRef} className='h-full w-full flex flex-nowrap transition-all duration-700'>
 
-                    <Zoom>
-                        <img src={ProductInfo.ProductImages[MainImage]} alt="product" className='w-full h-auto' />
-                    </Zoom>
+                        {ProductInfo.ProductImages.map((element) => 
+                        <div className='w-full h-auto min-w-full'>
+                            <Zoom>
+                                <img src={element} alt="product" className='w-full h-auto' />
+                            </Zoom>
+                        </div>
+                        )}
+                    </div>
+                
 
                 </div>
         </div>

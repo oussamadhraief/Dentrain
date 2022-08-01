@@ -2,12 +2,27 @@ import axios from "axios";
 import { createContext, PropsWithChildren, useEffect, useState } from "react";
 import LoadingAnimation from "../components/LoadingAnimation";
 
+interface userAddress {
+    address: string;
+    detailedAddress: string;
+    company: string;
+    zipCode: string;
+    city: string;
+    country: {
+        label: string;
+        value: string;
+    } | string;
+    addressName: string;
+    defaultAddress: boolean;
+}
+
 interface Auth {
     user : {
         name: string;
         phone: string;
         email: string;
         role: string;
+        address: userAddress[];
     }
 }
 
@@ -30,9 +45,9 @@ export const AuthProvider = (props: PropsWithChildren<any>) => {
         axios.get('/api/user',{
               withCredentials: true
             }).then((res) => {
-
+                console.log(res?.data?.user);
+                
               setAuth({user: res?.data?.user})
-              console.log(res?.data?.user);
               
               setLoading(false)
             }).catch(() => setLoading(false))

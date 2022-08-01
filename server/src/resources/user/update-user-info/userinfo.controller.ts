@@ -2,13 +2,13 @@ import { Router, Request, Response, NextFunction } from 'express';
 import Controller from '../../../utils/interfaces/controller.interface';
 import HttpException from '../../../utils/exceptions/http.exception';
 import validationMiddleware from '../../../middleware/validation.middleware';
-import validate from './username.validation';
-import UserNameService from './username.service';
+import validate from './userinfo.validation';
+import UserInfoService from './userinfo.service';
 
-class UserNameController implements Controller {
-    public path = '/user/update-name';
+class UserInfoController implements Controller {
+    public path = '/user/update-user-info';
     public router = Router();
-    private UserNameService = new UserNameService();
+    private UserInfoService = new UserInfoService();
 
     constructor() {
         this.initialiseRoutes();
@@ -30,18 +30,18 @@ class UserNameController implements Controller {
         try {
             if(req.isAuthenticated())
             {
-                const { name } = req.body;
+                const { name, phone } = req.body;
                 const { user } = req
                 
     
-                const updatedUser = await this.UserNameService.update( user, name );
+                const updatedUser = await this.UserInfoService.update( user, name,phone );
     
                 res.status(201).json({ updatedUser });
             }
         } catch (error) {
-            next(new HttpException(400, 'Cannot update user'));
+            next(new HttpException(400, "Cannot update user's name"));
         }
     };
 }
 
-export default UserNameController;
+export default UserInfoController;

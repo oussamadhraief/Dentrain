@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import React, { useState, useRef } from "react"
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 import preview from '../../../assets/preview.jpg'
@@ -8,6 +8,17 @@ import {IoIosArrowDown} from 'react-icons/io'
 import sizeChart from '../../../assets/sizeChart.webp'
 import { IconContext } from 'react-icons'
 
+interface product {
+    name: string;
+    ProductImages: string[];
+    PantsType: string[];
+    ProductSizes: string[];
+    PantsLength: string[];
+    description: string;
+    price: string;
+    salePrice: string;
+    onSale: boolean;
+}
 
 const AddProduct = () => {
 
@@ -16,21 +27,22 @@ const AddProduct = () => {
 
     const [ProductImages, setProductImages] = useState<string[]>([])
     const [MainImage, setMainImage] = useState<number>(0)
-    const [ProductInfo, setProductInfo] = useState({name: '',ProductImages: [medicalScrub,confident,medicalScrub,confident,medicalScrub,confident,medicalScrub,confident,medicalScrub,confident,medicalScrub,confident],PantsType: ["JOGGER","JOGGER"],ProductSizes: ['XS','S','M','L','XL','XLL'],PantsLength: ['PETIT','LARGE'], Description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi exercitationem ratione a architecto iure, quibusdam laboriosam sed voluptatem, iusto id obcaecati provident, est adipisci. Ipsa ea non dicta neque voluptatibus.'})
-    const [PreviewMainImage, setPreviewMainImage] = useState(0)
-    const [SelectedPantsType, setSelectedPantsType] = useState(0)
-    const [SelectedProductSize, setSelectedProductSize] = useState(0)
-    const [SelectedPantsLength, setSelectedPantsLength] = useState(0)
-    const [ExpandedSizeChart, setExpandedSizeChart] = useState(false)
-    const [ExpandedDescription, setExpandedDescription] = useState(false)
+    const [PreviewMainImage, setPreviewMainImage] = useState<number>(0)
+    const [SelectedPantsType, setSelectedPantsType] = useState<number>(0)
+    const [SelectedProductSize, setSelectedProductSize] = useState<number>(0)
+    const [SelectedPantsLength, setSelectedPantsLength] = useState<number>(0)
+    const [ExpandedSizeChart, setExpandedSizeChart] = useState<boolean>(false)
+    const [ExpandedDescription, setExpandedDescription] = useState<boolean>(false)
+    const [ProductForm, setProductForm] = useState<product>({ name: '', price: '', onSale: false, salePrice: '', ProductImages: [], PantsType: [], ProductSizes: [], PantsLength: [], description: '' })
+    const [PreviewProduct, setPreviewProduct] = useState<product>({ name: 'Product Name', price: '88.00', onSale: false, salePrice: '', ProductImages: [medicalScrub,confident,medicalScrub,confident,medicalScrub,confident,medicalScrub,confident,medicalScrub,confident,medicalScrub,confident], PantsType: ["JOGGER","JOGGER"], ProductSizes: ['XS','S','M','L','XL','XLL'], PantsLength: ['PETIT','LARGE'], description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi exercitationem ratione a architecto iure, quibusdam laboriosam sed voluptatem, iusto id obcaecati provident, est adipisci. Ipsa ea non dicta neque voluptatibus.' })
 
-//     function handleChange(event){
-//         setNameError(false)
-//         setForm({
-//             ...form,
-//             [event.target.name]: event.target.value
-//         })
-//     }
+    const handleChange = (event: React.FormEvent) => {
+        const target = event.target as HTMLInputElement
+        setProductForm({
+            ...ProductForm,
+            [target.name]: target.value
+        })
+    }
 
    async  function handleImageInput(e: React.FormEvent){
         const target = e.target as HTMLInputElement
@@ -69,6 +81,25 @@ const AddProduct = () => {
 
     }
 
+    const handlePreviewProduct = () => {
+        console.log(ProductForm);
+        console.log(PreviewProduct);
+        
+        const temp = {
+            name: ProductForm.name != '' ? ProductForm.name : PreviewProduct.name,
+            price: ProductForm.price != '' ? ProductForm.price : PreviewProduct.price,
+            salePrice: ProductForm.salePrice != '' ? ProductForm.salePrice : PreviewProduct.salePrice,
+            onSale: ProductForm.onSale,
+            description: ProductForm.description != '' ? ProductForm.description : PreviewProduct.description,
+            ProductImages: ProductForm.ProductImages.length ? ProductForm.ProductImages : PreviewProduct.ProductImages,
+            ProductSizes: ProductForm.ProductSizes.length ? ProductForm.ProductSizes : PreviewProduct.ProductSizes,
+            PantsType: ProductForm.PantsType.length ? ProductForm.PantsType : PreviewProduct.PantsType,
+            PantsLength: ProductForm.PantsLength.length ? ProductForm.PantsLength : PreviewProduct.PantsLength
+        }
+        console.log(temp);
+        setPreviewProduct(temp)
+    }
+
 
     return (
         <main className="flex-1 h-full overflow-auto">
@@ -100,50 +131,54 @@ const AddProduct = () => {
                 <div className="w-1/3 h-fit grid place-items-start">
                     <div className="w-full h-fit flex flex-nowrap justify-between items-center">
                         <h1 className="text-2xl font-medium text-darkertrendygreen">Product's informations</h1>
-                        <button type="button" className="w-fit h-fit px-2 py-0.5 border border-trendygreen text-sm font-medium text-trendygreen rounded-xl hover:text-white hover:bg-trendygreen">Preview</button>
+                        <button onClick={handlePreviewProduct} type="button" className="w-fit h-fit px-2 py-0.5 border border-trendygreen text-sm font-medium text-trendygreen rounded-xl hover:text-white hover:bg-trendygreen">Preview</button>
                     </div>
                     <label className="w-full h-fit font-medium text-black grid mt-5">
                         Name
-                        <input type="text" value="" className="w-full border h-9 outline-none" />
+                        <input type="text" name="name" value={ProductForm.name} onChange={handleChange} className="w-full border h-9 outline-none" />
                     </label>
 
                     <label className="w-full h-fit font-medium text-black grid mt-5">
-                        Price
-                        <input type="number" value="" className="w-full border h-9 outline-none" />
+                        Price &#40;$&#41;
+                        <input type="number" name="price" value={ProductForm.price} onChange={handleChange} className="w-full border h-9 outline-none removeArrowButtons" />
                     </label>
 
-                    <label className="w-full h-fit font-medium text-black grid mt-5">
-                        Price after sale
-                        <input type="number" value="" className="w-full border h-9 outline-none" />
-                    </label>
+                    {ProductForm.onSale && <label className="w-full h-fit font-medium text-black grid mt-5">
+                        Price after sale &#40;$&#41;
+                        <input type="number" name="salePrice" value={ProductForm.salePrice} onChange={handleChange} className="w-full border h-9 outline-none removeArrowButtons" />
+                    </label>}
 
                     <label className="font-medium flex items-center gap-1 text-sm">
-                        <input type="checkbox" />
+                        <input type="checkbox" name="onSale" checked={ProductForm.onSale} onChange={e => setProductForm(prev => {
+                            return {
+                            ...prev,
+                            onSale: !prev.onSale
+                        }})}/>
                         Item on sale
                     </label>
 
                     <label className="w-full h-fit font-medium text-black grid mt-5">
                         Description
-                        <textarea value="" cols={50} rows={4} className="w-full border h-40 outline-none"></textarea>
+                        <textarea name="description" value={ProductForm.description} onChange={handleChange} cols={50} rows={4} className="w-full border h-32 outline-none"></textarea>
                     </label>
 
                     <fieldset name="category" className="border border-trendygreen w-full px-2 py-3 mt-5">
 
-                        <legend className=" font-medium px-1">Category</legend>
+                        <legend className="font-medium px-1">Category</legend>
 
 
                         <label className="w-fit h-fit flex flex-nowrap items-center justify-start gap-2 font-mono">
-                            <input type="radio" value="" className="w-fit h-fit" />
+                            <input type="radio" name="category" value='Men' onChange={handleChange} className="w-fit h-fit" />
                             Men
                         </label>
 
                         <label className="w-fit h-fit flex flex-nowrap items-center justify-start gap-2 font-mono">
-                            <input type="radio" value="" className="w-fit h-fit" />
+                            <input type="radio" name="category" value='Women' onChange={handleChange} className="w-fit h-fit" />
                             Women
                         </label>
 
                         <label className="w-fit h-fit flex flex-nowrap items-center justify-start gap-2 font-mono">
-                            <input type="radio" value="" className="w-fit h-fit" />
+                            <input type="radio" name="category" value='Accessories' onChange={handleChange} className="w-fit h-fit" />
                             Accessories
                         </label>
 
@@ -156,27 +191,27 @@ const AddProduct = () => {
 
 
                         <label className="w-fit h-fit flex flex-nowrap items-center justify-start gap-2 font-mono">
-                            <input type="radio" value="" className="w-fit h-fit" />
+                            <input type="radio" name="subcategory" value='Classic' onChange={handleChange} className="w-fit h-fit" />
                             Classic
                         </label>
 
                         <label className="w-fit h-fit flex flex-nowrap items-center justify-start gap-2 font-mono">
-                            <input type="radio" value="" className="w-fit h-fit" />
+                            <input type="radio" name="subcategory" value='Fresh' onChange={handleChange} className="w-fit h-fit" />
                             Fresh
                         </label>
 
                         <label className="w-fit h-fit flex flex-nowrap items-center justify-start gap-2 font-mono">
-                            <input type="radio" value="" className="w-fit h-fit" />
+                            <input type="radio" name="subcategory" value='Fall' onChange={handleChange} className="w-fit h-fit" />
                             Fall
                         </label>
 
                         <label className="w-fit h-fit flex flex-nowrap items-center justify-start gap-2 font-mono">
-                            <input type="radio" value="" className="w-fit h-fit" />
+                            <input type="radio" name="subcategory" value='Summer' onChange={handleChange} className="w-fit h-fit" />
                             Summer
                         </label>
 
                         <label className="w-fit h-fit flex flex-nowrap items-center justify-start gap-2 font-mono">
-                            <input type="radio" value="" className="w-fit h-fit" />
+                            <input type="radio" name="subcategory" value='White Coat' onChange={handleChange} className="w-fit h-fit" />
                             White Coat
                         </label>
 
@@ -192,12 +227,12 @@ const AddProduct = () => {
                 <div className='w-4/12 h-fit flex flex-nowrap justify-end items-start gap-5 overflow-hidden relative'>
 
                     <div ref={ImageScrollerRef} className='productSideImageContainer grid place-content-start gap-5 removeScrollbar scroll-smooth'>
-                            {ProductInfo.ProductImages.map((element,index) => <button className={index === MainImage ? "relative before:content-[''] before:inset-0 before:border-2 before:border-black before:absolute" : ""} onClick={() => handleChangeMainImage(index)}><img src={element} alt="product" className='w-full h-auto' /></button>)}
+                            {PreviewProduct.ProductImages.map((element,index) => <button className={index === MainImage ? "relative before:content-[''] before:inset-0 before:border-2 before:border-black before:absolute" : ""} onClick={() => handleChangeMainImage(index)}><img src={element} alt="product" className='w-full h-auto' /></button>)}
                     </div>
                     <div className='productMainImageContainer'>
 
                         <Zoom>
-                            <img src={ProductInfo.ProductImages[MainImage]} alt="product" className='w-full h-auto' />
+                            <img src={PreviewProduct.ProductImages[MainImage]} alt="product" className='w-full h-auto' />
                         </Zoom>
 
                     </div>
@@ -205,9 +240,9 @@ const AddProduct = () => {
 
                 <div className='w-4/12 h-fit grid place-items-start'>
 
-                    <h1 className='text-3xl font-semibold mb-5 text-darkertrendygreen'>Something</h1>
+                    <h1 className='text-3xl font-semibold mb-5 text-darkertrendygreen'>{PreviewProduct.name}</h1>
 
-                    <h2 className='text-xl mb-7 font-mono font-bold'>  $88.00</h2>
+                    <h2 className='text-xl mb-7 font-mono font-bold'>  ${PreviewProduct.price}</h2>
 
                     <section className='w-full mb-7'>
                         <button onClick={() => setExpandedSizeChart(prev => !prev)} className="w-full h-fit flex flex-nowrap justify-between items-center py-2">
@@ -224,16 +259,16 @@ const AddProduct = () => {
 
                     <p className='font-mono text-xl mb-1 text-darkertrendygreen'>PANTS</p>
                     <div className='w-fit h-fit flex flex-nowrap justify-start items-center gap-2'>
-                        {ProductInfo.PantsType.map((item,index) => <button onClick={() => setSelectedPantsType(index)} className={SelectedPantsType === index ? 'w-24 h-10 border-2 border-trendygreen text-darkertrendygreen font-medium' : 'w-24 h-10 border border-zinc-300' }>{item}</button>)}
+                        {PreviewProduct.PantsType.map((item,index) => <button onClick={() => setSelectedPantsType(index)} className={SelectedPantsType === index ? 'w-24 h-10 border-2 border-trendygreen text-darkertrendygreen font-medium' : 'w-24 h-10 border border-zinc-300' }>{item}</button>)}
                     </div>
 
                     <p className='font-mono text-xl mb-1 mt-7 text-darkertrendygreen'>SIZE</p>
                     <div className='w-fit h-fit flex flex-nowrap justify-start items-center gap-2'>
-                        {ProductInfo.ProductSizes.map((item,index) => <button onClick={() => setSelectedProductSize(index)} className={SelectedProductSize === index ? 'w-14 h-10 border-2 border-trendygreen text-darkertrendygreen font-medium' : 'w-14 h-10 border border-zinc-300' }>{item}</button>)}
+                        {PreviewProduct.ProductSizes.map((item,index) => <button onClick={() => setSelectedProductSize(index)} className={SelectedProductSize === index ? 'w-14 h-10 border-2 border-trendygreen text-darkertrendygreen font-medium' : 'w-14 h-10 border border-zinc-300' }>{item}</button>)}
                     </div>
                     <p className='font-mono text-xl mb-1 mt-7 text-darkertrendygreen'>LENGTH</p>
                     <div className='w-fit h-fit flex flex-nowrap justify-start items-center gap-2'>
-                        {ProductInfo.PantsLength.map((item,index) => <button onClick={() => setSelectedPantsLength(index)} className={SelectedPantsLength === index ? 'w-24 h-10 border-2 border-trendygreen text-darkertrendygreen font-medium' : 'w-24 h-10 border border-zinc-300' }>{item}</button>)}
+                        {PreviewProduct.PantsLength.map((item,index) => <button onClick={() => setSelectedPantsLength(index)} className={SelectedPantsLength === index ? 'w-24 h-10 border-2 border-trendygreen text-darkertrendygreen font-medium' : 'w-24 h-10 border border-zinc-300' }>{item}</button>)}
                     </div>
 
                     <button className='w-full text-center h-12 border border-darkertrendygreen text-darkertrendygreen font-medium mt-10'>Add to cart</button>

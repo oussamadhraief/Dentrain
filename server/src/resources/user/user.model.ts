@@ -22,7 +22,41 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
         default: 'user'
-    }
+    },
+    address: {
+        type: [{
+        _id: false,
+        address: {
+            type: String,
+            required: true
+        },
+        detailedAddress: String,
+        company: String,
+        zipCode: String,
+        city: {
+            type: String,
+            required: true
+        },
+        country: {
+            type: {
+                label: String,
+                value: String,
+            },
+            required: true
+        },
+        addressName: {
+            type: String,
+            required: true
+        },
+        defaultAddress: {
+            type: Boolean,
+            required: true,
+            default: false
+        },
+        }],
+        required: true,
+        default: []
+}
 })
 
-export default mongoose.model<UserInterface>('TempUtilisateur', UserSchema)
+export default mongoose.model<UserInterface>('UtilisateurTempThree', UserSchema)

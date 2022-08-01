@@ -7,7 +7,7 @@ import passport from 'passport'
 import passportLocal from 'passport-local'
 import bcrypt from 'bcryptjs'
 import 'dotenv/config'
-import TempUtilisateur from './resources/user/user.model'
+import UtilisateurTempThree from './resources/user/user.model'
 import { UserInterface } from './resources/user/user.interface'
 import bodyParser from 'body-parser';
 import compression from 'compression';
@@ -15,7 +15,8 @@ import morgan from 'morgan';
 import ErrorMiddleware from './middleware/error.middleware';
 import helmet from 'helmet';
 import PostController from './resources/post/post.controller'
-import UserNameController from './resources/user/update-name/username.controller'
+import UserInfoController from './resources/user/update-user-info/userinfo.controller'
+import UserAddressController from './resources/user/add-user-address/useraddress.controller'
 
 
 
@@ -55,7 +56,7 @@ import UserNameController from './resources/user/update-name/username.controller
     
     //Passport
     passport.use(new LocalStrategy({usernameField: "email", passwordField: "password"},( email, password, done ) => {
-        TempUtilisateur.findOne({ email }, (err: any, user: any ) => {
+        UtilisateurTempThree.findOne({ email }, (err: any, user: any ) => {
             
             if(err) throw err
             if(!user) return done(null,false)
@@ -75,13 +76,14 @@ import UserNameController from './resources/user/update-name/username.controller
     })
 
     passport.deserializeUser((id: string, cb) => {
-        TempUtilisateur.findOne({ _id: id }, (err:any, user: any)  => {
+        UtilisateurTempThree.findOne({ _id: id }, (err:any, user: any)  => {
             const userInformation = {
                 id: user._id,
                 email: user.email,
                 phone: user.phone,
                 name: user.name,
-                role: user.role
+                role: user.role,
+                address: user.address
             }
             cb(err, userInformation)
         })
@@ -98,15 +100,16 @@ import UserNameController from './resources/user/update-name/username.controller
             res.status(400).json({ success: false })
         }
 
-        TempUtilisateur.findOne({ email } , async (err: Error, doc: UserInterface) => {
+        UtilisateurTempThree.findOne({ email } , async (err: Error, doc: UserInterface) => {
             if(err) throw err
             if(doc) res.send("User Already Exists")
             if(!doc) {
                 const hashedPassword = await bcrypt.hash(password, 10)
-                const newUser = new TempUtilisateur({
+                const newUser = new UtilisateurTempThree({
                     name,
                     email,
-                    password: hashedPassword
+                    password: hashedPassword,
+                    role: 'user'
                 })
                 await newUser.save()
                 res.status(201).json({ success: true })
@@ -134,9 +137,10 @@ import UserNameController from './resources/user/update-name/username.controller
     
     app.use('/api', new PostController().router)
 
-    app.use('/api', new UserNameController().router)
+    app.use('/api', new UserInfoController().router)
+
+    app.use('/api', new UserAddressController().router)
 
 
     app.listen(process.env.PORT, () => {
-    console.log('Server listening on port',process.env.PORT);
-})
+    console.log('Server listening on port',process.env.PORT)})

@@ -59,11 +59,11 @@ const NavbarNavigationSection = ({ Scrolled } : {Scrolled: boolean}) => {
                     </IconContext.Provider>
                     
               {Show && <div className='absolute left-1/2 -translate-x-1/2 mx-auto top-[125%] h-fit bg-white shadow-float grid w-52 rounded px-1.5'>
-                <Link className='w-full h-fit text-center py-1 border-b hover:underline' to='/'>Home</Link>
-                <Link className='w-full h-fit text-center py-1 border-b hover:underline' to='/account/orders'>My orders</Link>
-                <Link className='w-full h-fit text-center py-1 border-b hover:underline' to='/account/wishlist'>My wishlist</Link>
-                <Link className='w-full h-fit text-center py-1 border-b hover:underline' to='/account/settings'>Settings</Link>
-                <div onClick={handleLogout} className="w-full h-fit text-center py-1 hover:underline text-red-500">Logout</div>
+                <Link className='w-full h-fit text-center py-1.5 border-b hover:underline' to='/'>Home</Link>
+                <Link className='w-full h-fit text-center py-1.5 border-b hover:underline' to='/account/orders'>My orders</Link>
+                <Link className='w-full h-fit text-center py-1.5 border-b hover:underline' to='/account/wishlist'>My wishlist</Link>
+                <Link className='w-full h-fit text-center py-1.5 border-b hover:underline' to='/account/settings'>Settings</Link>
+                <div onClick={handleLogout} className="w-full h-fit text-center py-1.5 hover:underline text-red-500">Logout</div>
               </div>}
           </button>
 

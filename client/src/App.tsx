@@ -14,6 +14,7 @@ import RequiredAuth from "./components/RequiredAuth";
 import useAuth from "./hooks/useAuth";
 import AdminDashboard from "./pages/admin-dashboard/AdminDashboard";
 import UserDashboardLayout from "./components/UserDashboardLayout";
+import Account from "./pages/account/Account";
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
           <Route element={<RequiredAuth allowedRoles={['user','admin']} />}>
             <Route path="cart" element={<p>cart</p>} />
             <Route path='account' element={<UserDashboardLayout />}>
+              <Route index element={<Account />} />
               <Route path="orders" element={<AccountSettings />} />
               <Route path="wishlist" element={<AccountSettings />} />
               <Route path="settings" element={<AccountSettings />} />
