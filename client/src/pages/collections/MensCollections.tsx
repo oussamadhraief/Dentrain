@@ -1,18 +1,32 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import confident from '../../assets/confident.jpg'
 import medicalScrub from '../../assets/medicalScrub.jpg'
 import MultiRangeSlider from '../../components/MultiRangeSilder'
 import { BsFilterLeft } from 'react-icons/bs'
 import { IconContext } from 'react-icons'
 import Select from 'react-select'
+import LoadingAnimation from '../../components/LoadingAnimation'
+import { authentication } from '../../services/authentication'
+import useAuth from '../../hooks/useAuth'
 
 
 
 const MensCollections = () => {
 
+    const { setAuth } = useAuth()
+    
+    const [Loading, setLoading] = useState<boolean>(false)
     const [ShowFilters, setShowFilters] = useState<boolean>(false)
     const [SortFilter,setSortFilter] = useState<string>('')
     
+    useEffect(() => {
+        authentication(setLoading, setAuth)
+    },[])
+
+  if(Loading)
+    return <LoadingAnimation />
+
+
   return (
     <main className='w-full h-fit py-20 grid'>
         <div className='flex flex-nowrap w-9/12 h-fit mx-auto justify-between pt-6 pb-5 '>

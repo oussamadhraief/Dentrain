@@ -4,8 +4,24 @@ import { RiFileList2Line } from 'react-icons/ri'
 import { FaFileInvoiceDollar } from 'react-icons/fa'
 import { FaLongArrowAltRight } from 'react-icons/fa'
 import { IconContext } from "react-icons"
+import { authentication } from "../../services/authentication"
+import { useEffect, useState } from "react"
+import useAuth from "../../hooks/useAuth"
+import LoadingAnimation from "../../components/LoadingAnimation"
 
 const Account = () => {
+
+    const { setAuth } = useAuth()
+
+    const [Loading, setLoading] = useState<boolean>(false)
+
+    useEffect(() => {
+        authentication(setLoading, setAuth)
+    },[])
+
+  if(Loading)
+    return <LoadingAnimation />
+    
   return (
     <div className="w-full h-fit">
         <h1 className='w-full h-fit text-2xl font-bold text-darkgray text-center'>Your account's activity</h1>

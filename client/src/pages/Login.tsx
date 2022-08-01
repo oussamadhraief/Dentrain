@@ -1,7 +1,9 @@
 import axios from "axios"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate, Link, useLocation } from "react-router-dom"
+import LoadingAnimation from "../components/LoadingAnimation"
 import useAuth from "../hooks/useAuth"
+import { authentication } from "../services/authentication"
 
 
 const Login = () => {
@@ -12,6 +14,12 @@ const Login = () => {
     const { setAuth } = useAuth()
 
     const [LoginForm, setLoginForm] = useState({email: '',password: ''})
+
+    const [Loading, setLoading] = useState<boolean>(false)
+
+    useEffect(() => {
+        authentication(setLoading, setAuth)
+    },[])
 
     const handleChange = (e: React.FormEvent) => {
         const {name,value} = e.target as HTMLInputElement
@@ -36,9 +44,12 @@ const Login = () => {
           
     }
 
+    if(Loading)
+        return <LoadingAnimation />
+
   return (
     <main className="h-fit w-full flex justify-center items-center">
-        <form className="w-1/5 h-fit py-24 grid place-items-center" onSubmit={handleSubmit}>
+        <form className="w-1/5 min-w-[320px] h-fit py-24 grid place-items-center" onSubmit={handleSubmit}>
             <h1 className="w-fit h-fit text-3xl font-bold text-darkertrendygreen mb-7">Login</h1>
             <label className="grid w-full h-fit font-medium text-lg mb-5">
                 Email

@@ -7,11 +7,15 @@ import medicalScrub from '../../assets/medicalScrub.jpg'
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 import sizeChart from '../../assets/sizeChart.webp'
+import LoadingAnimation from '../../components/LoadingAnimation'
+import useAuth from '../../hooks/useAuth'
+import { authentication } from '../../services/authentication'
 
 
 const ProductDetails = () => {
 
     const { productId } = useParams()
+    const { setAuth } = useAuth()
 
     const ImageScrollerRef = useRef<HTMLDivElement>(null)
     const MainImageRef  = useRef<HTMLDivElement>(null)
@@ -23,6 +27,11 @@ const ProductDetails = () => {
     const [SelectedPantsLength, setSelectedPantsLength] = useState(0)
     const [ExpandedSizeChart, setExpandedSizeChart] = useState(false)
     const [ExpandedDescription, setExpandedDescription] = useState(false)
+    const [Loading, setLoading] = useState<boolean>(false)
+
+    useEffect(() => {
+        authentication(setLoading, setAuth)
+    },[])
     
     useEffect(() => {
         if(ImageScrollerRef.current && MainImageRef.current )
@@ -40,6 +49,8 @@ const ProductDetails = () => {
 
     }
 
+  if(Loading)
+    return <LoadingAnimation />
   return (
     <main className='h-fit w-full py-20 flex flex-nowrap justify-center gap-10 items-start'>
         <div className='w-1/3 h-fit flex flex-nowrap justify-end items-start gap-5 relative overflow-hidden'>

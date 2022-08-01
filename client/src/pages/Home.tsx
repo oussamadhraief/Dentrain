@@ -5,14 +5,23 @@ import BestWomenSellersSection from "../components/BestWomenSellersSection"
 import BestMenSellersSection from "../components/BestMenSellersSection"
 import confident from '../assets/confident.jpg'
 import medicalScrub from '../assets/medicalScrub.jpg'
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
-
-
+import { authentication } from "../services/authentication"
+import LoadingAnimation from "../components/LoadingAnimation"
+import useAuth from "../hooks/useAuth"
 
 
 const Home = () => {
+  
+  const { setAuth } = useAuth()
+
+  const [Loading, setLoading] = useState<boolean>(false)
+
+  useEffect(() => {
+    authentication(setLoading, setAuth)
+  },[])
 
   const handleDragStart = (e: React.FormEvent) => e.preventDefault();
 
@@ -50,6 +59,10 @@ const items = [
 </div>,
 ];
 
+  if(Loading)
+    return <LoadingAnimation />
+
+  
   return (
     <main>
         <NewestProductsSection />

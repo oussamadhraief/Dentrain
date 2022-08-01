@@ -1,11 +1,13 @@
 import axios, { AxiosError, AxiosResponse } from "axios"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import useAuth from "../../hooks/useAuth"
 import { IoIosArrowDown } from 'react-icons/io'
 import { HiOutlineInformationCircle } from 'react-icons/hi'
 import { IconContext } from 'react-icons'
 import { countriesData } from "../../utils/countriesData"
 import Select from 'react-select'
+import { authentication } from "../../services/authentication"
+import LoadingAnimation from "../../components/LoadingAnimation"
 
 interface Country {
     label: string;
@@ -39,6 +41,13 @@ const AccountSettings = () => {
     const [AddNewAddressForm, setAddNewAddressForm] = useState<UserAddress>({ address: '', detailedAddress: '', zipCode: '', city: '', country: '', company: '', addressName: '', defaultAddress: false })
     const [ShowUpdateAddressForm, setShowUpdateAddressForm] = useState<boolean>(false)
     const [UpdateAddressForm, setUpdateAddressForm] = useState<UserAddress>({ address: '', detailedAddress: '', zipCode: '', city: '', country: '', company: '', addressName: '', defaultAddress: false })
+    const [Loading, setLoading] = useState<boolean>(false)
+
+    useEffect(() => {
+        authentication(setLoading, setAuth)
+    },[])
+
+  
 
     useEffect(() => {
 
@@ -137,6 +146,9 @@ const AccountSettings = () => {
             setUpdateAddressForm({ address: '', detailedAddress: '', zipCode: '', city: '', country: '', company: '', addressName: '', defaultAddress: false })
         })
     }
+
+  if(Loading)
+    return <LoadingAnimation />
     
   return (
     <div className="flex-1">

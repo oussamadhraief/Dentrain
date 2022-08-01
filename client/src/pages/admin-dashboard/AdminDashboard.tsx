@@ -4,9 +4,24 @@ import { RiFileList2Line } from 'react-icons/ri'
 import { FaFileInvoiceDollar } from 'react-icons/fa'
 import { FaLongArrowAltRight } from 'react-icons/fa'
 import { IconContext } from "react-icons"
+import useAuth from "../../hooks/useAuth"
+import { useEffect, useState } from "react"
+import { authentication } from "../../services/authentication"
+import LoadingAnimation from "../../components/LoadingAnimation"
 
 
 const AdminDashboard = () => {
+
+    const { setAuth } = useAuth()
+    
+    const [Loading, setLoading] = useState<boolean>(false)
+
+    useEffect(() => {
+        authentication(setLoading, setAuth)
+    },[])
+
+  if(Loading)
+    return <LoadingAnimation />
     
   return (
     <main className="flex-1 overflow-auto py-10">

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 import preview from '../../../assets/preview.jpg'
@@ -7,6 +7,9 @@ import medicalScrub from '../../../assets/medicalScrub.jpg'
 import {IoIosArrowDown} from 'react-icons/io'
 import sizeChart from '../../../assets/sizeChart.webp'
 import { IconContext } from 'react-icons'
+import LoadingAnimation from "../../../components/LoadingAnimation"
+import { authentication } from "../../../services/authentication"
+import useAuth from "../../../hooks/useAuth"
 
 interface product {
     name: string;
@@ -22,6 +25,8 @@ interface product {
 
 const AddProduct = () => {
 
+    const { setAuth } = useAuth()
+
     const ImageScrollerRef = useRef<HTMLDivElement>(null)
 
 
@@ -35,6 +40,14 @@ const AddProduct = () => {
     const [ExpandedDescription, setExpandedDescription] = useState<boolean>(false)
     const [ProductForm, setProductForm] = useState<product>({ name: '', price: '', onSale: false, salePrice: '', ProductImages: [], PantsType: [], ProductSizes: [], PantsLength: [], description: '' })
     const [PreviewProduct, setPreviewProduct] = useState<product>({ name: 'Product Name', price: '88.00', onSale: false, salePrice: '', ProductImages: [medicalScrub,confident,medicalScrub,confident,medicalScrub,confident,medicalScrub,confident,medicalScrub,confident,medicalScrub,confident], PantsType: ["JOGGER","JOGGER"], ProductSizes: ['XS','S','M','L','XL','XLL'], PantsLength: ['PETIT','LARGE'], description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi exercitationem ratione a architecto iure, quibusdam laboriosam sed voluptatem, iusto id obcaecati provident, est adipisci. Ipsa ea non dicta neque voluptatibus.' })
+    const [Loading, setLoading] = useState<boolean>(false)
+
+    useEffect(() => {
+        authentication(setLoading, setAuth)
+    },[])
+
+  if(Loading)
+    return <LoadingAnimation />
 
     const handleChange = (event: React.FormEvent) => {
         const target = event.target as HTMLInputElement
