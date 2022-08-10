@@ -12,7 +12,7 @@ const Footer = () => {
   return (
     <footer className='w-full h-96 bg-darkertrendygreen shadow-xxxl shadow-darkertrendygreen/50 flex justify-around items-start py-10'>
         <div>
-          <h3 className="text-white font-bold poppinsFont w-full text-center">Visit us at :</h3>
+          <h3 className="text-white font-medium w-full text-center">Visit us at :</h3>
           <div className='w-full h-fit flex justify-center mt-5 flex-nowrap items-center text-white gap-3'> 
             <IconContext.Provider value={{ className: 'w-7 h-7'}}>
               <a className='hover:scale-125 transition-all' target='_blank' href="https://www.instagram.com/dentrain.uae/">
@@ -35,8 +35,8 @@ const Footer = () => {
             
         </div>
         <div>
-          <h3 className="w-full text-white font-bold poppinsFont">Subscribe to our news letter</h3>
-          <h3 className="w-full text-white font-medium poppinsFont text-sm mt-1">Stay up-to-date with all the news, offers and new products</h3>
+          <h3 className="w-full text-white font-medium">Subscribe to our news letter</h3>
+          <h3 className="w-full text-white wsFont text-sm mt-1">Stay up-to-date with all the news, offers and new products</h3>
           <form className='w-full h-fit flex items-center gap-2 mt-5'>
 
             <div className="flex flex-col floatingLabel w-full relative">
@@ -53,7 +53,7 @@ const Footer = () => {
                 <label htmlFor="newsLetter" className={ isNewsLetterActive ? "Active" : ""}>Please enter your email</label>
             </div>
 
-            <button type='submit' className='w-fit h-[42px] px-3 bg-trendygreen font-medium text-white rounded'>Subscribe</button>
+            <button type='submit' className='w-fit h-[42px] px-3 bg-trendygreen font-medium text-sm text-white rounded'>Subscribe</button>
 
           </form>
         </div>

@@ -287,7 +287,7 @@ const Checkout = () => {
 
                 <p className='w-full h-fit flex justify-between items-center mb-5 mt-5 font-medium text-white text-sm'>Subtotal: <span>299$</span></p>
                 <p className='w-full h-fit flex justify-between items-center pb-5 border-b border-trendygreen font-medium text-white text-sm'>Estimate shipping: <span>299$</span></p>
-                <p className='w-full h-fit flex justify-between items-center mt-3 font-bold text-white'>Total: <span className='text-2xl'>299$</span></p>
+                <p className='w-full h-fit flex justify-between items-center mt-3 font-medium text-white'>Total: <span className='text-2xl'>299$</span></p>
             </section>
 
         </aside>

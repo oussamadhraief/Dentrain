@@ -1,17 +1,23 @@
 import axios from "axios"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useNavigate, Link, useLocation } from "react-router-dom"
 import useAuth from "../hooks/useAuth"
 
 
 const Login = () => {
 
+    const emailInputRef = useRef<HTMLInputElement>(null)
     const navigate = useNavigate()
     const location:any = useLocation()
     const from = location.state?.from?.pathname || '/'
     const { setAuth } = useAuth()
 
     const [LoginForm, setLoginForm] = useState({email: '',password: ''})
+
+    useEffect(() => {
+        emailInputRef.current?.focus()
+    }, [])
+    
 
     const handleChange = (e: React.FormEvent) => {
         const {name,value} = e.target as HTMLInputElement
@@ -42,11 +48,11 @@ const Login = () => {
             <h1 className="w-fit h-fit text-3xl font-bold text-darkertrendygreen mb-7">Login</h1>
             <label className="grid w-full h-fit font-medium text-lg mb-5">
                 Email
-                <input type="text" name="email" value={LoginForm.email} onChange={e => handleChange(e)} className="border text-base font-normal w-full h-10 outline-none" />
+                <input ref={emailInputRef} type="text" name="email" value={LoginForm.email} onChange={e => handleChange(e)} className="border text-base w-full h-10 outline-none px-1" />
             </label>
             <label className="grid w-full h-fit font-medium text-lg">
                 Password
-                <input type="password" name="password" value={LoginForm.password} onChange={e => handleChange(e)} className="border text-base font-normal w-full h-10 outline-none" />
+                <input type="password" name="password" value={LoginForm.password} onChange={e => handleChange(e)} className="border text-base w-full h-10 outline-none px-1" />
             </label>
             <div className="w-full text-right mb-7">
                 <Link to={'/password-reset'} className='w-fit text-darkertrendygreen hover:underline'>Forgot password ?</Link>

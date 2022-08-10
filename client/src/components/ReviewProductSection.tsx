@@ -1,4 +1,5 @@
 import { useState } from "react"
+import StarsRating from 'react-star-rate';
 
 interface Review {
     title: string;
@@ -24,13 +25,13 @@ const ReviewProductSection = () => {
     const [ReviewForm, setReviewForm] = useState<Review>({ title: '', body: '' })
     const [isTitleActive, setisTitleActive] = useState<boolean>(false)
     const [isBodyActive, setisBodyActive] = useState<boolean>(false)
-
+    const [ReviewRating, setReviewRating] = useState<number | undefined>(0)
+    
   return (
     <form className="w-full h-fit my-32 grid">
         <h1 className="w-fit h-fit poppinsFont mx-auto text-xl font-bold">Leave a review</h1>
         <h2 className="w-fit h-fit poppinsFont mx-auto font-medium">Tell people what you think</h2>
-        <div className="w-1/2 h-fit mx-auto grid mt-5 bg-zinc-50 px-10 py-5">
-            <div className="my-3">Rate it: *****</div>
+        <div className="w-1/2 h-fit mx-auto grid mt-5 bg-zinc-50 px-10 pb-5">
 
 
             <div className="flex flex-col floatingLabelInput w-full relative mt-5 mb-3">
@@ -38,17 +39,31 @@ const ReviewProductSection = () => {
                 <label htmlFor="body" className={ isBodyActive ? "Active" : ""}>Review</label>
             </div>
             
-            <div className="flex flex-col floatingLabel w-full relative mb-5">
+            <div className="flex flex-col floatingLabel w-full relative">
                 <input type="text" name="title" id="title" value={ReviewForm.title} onChange={e => handleReviewFormChange(e, setisTitleActive)} />
-                <label htmlFor="title" className={ isTitleActive ? "Active" : ""}>Title &#40;optional&#41;</label>
+                <label htmlFor="title" className={ isTitleActive ? "Active" : ""}>Title</label>
             </div>
 
-            <p className="poppinsFont font-bold">How should we display your avatar ?</p>
-            <label className="flex gap-1 mt-0.5">
+            <div className="h-fit w-fit flex items-center gap-2">
+              <p className="mt-3.5">
+                Rate it :
+              </p>
+                <StarsRating
+                              value={ReviewRating}
+                              allowHalf={false}
+                              onChange={value => {
+                              setReviewRating(value);
+                              }}
+                          />
+            </div>
+              
+
+            <p className="font-medium mt-2">How should we display your avatar ?</p>
+            <label className="flex gap-1 mt-0.5 text-sm">
             <input type="radio" name="gender" />
             Male
             </label>
-            <label className="flex gap-1 mt-0.5">
+            <label className="flex gap-1 mt-0.5 text-sm">
             <input type="radio" name="gender" />
             Female
             </label>

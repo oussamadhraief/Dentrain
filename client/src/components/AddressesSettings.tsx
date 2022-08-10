@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { countriesData } from "../utils/countriesData"
 import Select from 'react-select'
 import { HiOutlineInformationCircle } from 'react-icons/hi'
@@ -49,6 +49,7 @@ const themes = (theme:any) => ({
 const AddressesSettings = ({ ShowUseraddressesSection, ShowAddNewAddressForm, ShowUpdateAddressForm, AddNewAddressForm, setShowUsernameForm, setAddNewAddressForm, setShowUseraddressesSection, setShowUserpasswordForm, setShowAddNewAddressForm, setShowUpdateAddressForm }: Props) => {
 
     const { Auth,setAuth } = useAuth()
+    const updateAddressInputRef = useRef<HTMLInputElement>(null)
     
     const [UpdateAddressForm, setUpdateAddressForm] = useState<UserAddress>({ address: '', detailedAddress: '', zipCode: '', city: '', country: '', company: '', addressName: '', defaultAddress: false })
     const [isCompanyActive, setisCompanyActive] = useState<boolean>(false)
@@ -58,6 +59,7 @@ const AddressesSettings = ({ ShowUseraddressesSection, ShowAddNewAddressForm, Sh
     const [isZipCodeActive, setisZipCodeActive] = useState<boolean>(false)
     const [isAddressNameActive, setisAddressNameActive] = useState<boolean>(false)
     
+
     const handleAddAddressFormChange = ( e: React.FormEvent<HTMLInputElement>, setIsActive: React.Dispatch<React.SetStateAction<boolean>> ) => {
         const target = e.target as HTMLInputElement
         setAddNewAddressForm({
@@ -283,6 +285,7 @@ const AddressesSettings = ({ ShowUseraddressesSection, ShowAddNewAddressForm, Sh
                     setisCityActive(true)
                     setisZipCodeActive(true)
                     setisAddressNameActive(true)
+                    updateAddressInputRef.current?.scrollIntoView()
                     if(item.company !== '')
                         setisCompanyActive(true)
                     if(item.detailedAddress !== '')
@@ -292,11 +295,11 @@ const AddressesSettings = ({ ShowUseraddressesSection, ShowAddNewAddressForm, Sh
             </div>
         </address>)})}
     
-        <form className={ShowUpdateAddressForm ? "w-full px-1 h-fit mb-5 grid max-h-[1000px] overflow-hidden transition-all duration-300" : "w-full px-1 h-fit grid max-h-0 overflow-hidden transition-all duration-300"} onSubmit={handleUpdateAddressSubmit}>
+        <form  className={ShowUpdateAddressForm ? "w-full px-1 h-fit mb-5 grid max-h-[1000px] overflow-hidden transition-all duration-300" : "w-full px-1 h-fit grid max-h-0 overflow-hidden transition-all duration-300"} onSubmit={handleUpdateAddressSubmit}>
 
 
             <div className="flex flex-col floatingLabel w-full relative mt-5">
-                <input type="text" name="address" id="address" value={UpdateAddressForm.address} onChange={e => handleUpdateAddressFormChange(e, setisAddressActive)} />
+                <input ref={updateAddressInputRef} type="text" name="address" id="address" value={UpdateAddressForm.address} onChange={e => handleUpdateAddressFormChange(e, setisAddressActive)} className='scroll-smooth' />
                 <label htmlFor="address" className={ isAddressActive ? "Active" : ""}>Address</label>
             </div>
 
@@ -357,7 +360,7 @@ const AddressesSettings = ({ ShowUseraddressesSection, ShowAddNewAddressForm, Sh
         <div className="flex flex-col disabledFloatingLabel w-full relative mt-5 group hover:cursor-not-allowed">
             <input type="text" name="addressName" id="addressName" value={UpdateAddressForm.addressName} className='hover:cursor-not-allowed text-zinc-600' />
             <label htmlFor="addressName" className={ isAddressNameActive ? "Active" : ""}>Address name</label>
-            <p className="hidden group-hover:block absolute top-[110%] left-1/2 -translate-x-1/2 h-fit w-fit text-sm font-normal bg-red-200 text-red-500 px-2 py-1 rounded z-10 before:absolute before:left-1/2 before:-translate-x-1/2 before:w-3 before:h-3 before:bg-red-200 before:-top-1 before:rotate-45">Sorry, you can't edit the name of this address</p>
+            <p className="hidden group-hover:block absolute top-[110%] left-1/2 -translate-x-1/2 h-fit w-fit text-sm wsFont font-medium bg-red-100 text-red-600 px-2 py-1 rounded z-10 before:absolute before:left-1/2 before:-translate-x-1/2 before:w-3 before:h-3 before:bg-red-100 before:-top-1 before:rotate-45">Sorry, you can't edit the name of this address</p>
         </div>
 
             <label className="font-medium text-sm text-darkgray mt-5 gap-1 w-fit flex whitespace-nowrap items-center">
