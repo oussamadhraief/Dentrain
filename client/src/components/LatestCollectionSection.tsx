@@ -1,4 +1,4 @@
-import medicalScrub from "../assets/medicalScrub.jpg"
+import medicalScrub from "../assets/product2.webp"
 import { Link } from 'react-router-dom'
 
 const LatestCollectionSection = () => {
@@ -9,8 +9,8 @@ const LatestCollectionSection = () => {
             <h1 className="text-2xl font-bold text-darkgray">2022 COLLECTION</h1>
             <h2 className="text-sm text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae magni praesentium perspiciatis velit libero, voluptate nesciunt veniam ad commodi provident.</h2>
             <div className="w-fit h-fit flex flex-nowrap gap-3">
-                <Link to="/product" className="bg-trendygreen rounded shadow-tgreen px-5 py-2 mt-5 w-fit h-fit text-white font-medium">View Men's Collection</Link>
-                <Link to="/product" className="bg-trendygreen rounded shadow-tgreen px-5 py-2 mt-5 w-fit h-fit text-white font-medium">View Women's Collection</Link>
+                <Link to="/products/product-name" className="bg-trendygreen rounded shadow-tgreen px-5 py-2 mt-5 w-fit h-fit text-white font-medium">View Men's Collection</Link>
+                <Link to="/products/product-name" className="bg-trendygreen rounded shadow-tgreen px-5 py-2 mt-5 w-fit h-fit text-white font-medium">View Women's Collection</Link>
             </div>
         </div>
     </div>

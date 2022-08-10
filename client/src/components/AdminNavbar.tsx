@@ -60,15 +60,13 @@ const AdminNavbar = ({ SideBarOpen, setSideBarOpen}: Props) => {
                 </button>
 
                 {Open && 
-                    <div className='absolute top-[110%] right-0 w-40 h-fit bg-white rounded shadow-float grid px-2 font-medium'>
-                        
-                        <Link className='w-full h-fit text-center py-1 border-b hover:underline' to='/'>Home</Link>
-                        <Link className='w-full h-fit text-center py-1 border-b hover:underline' to='/account/orders'>My orders</Link>
-                        <Link className='w-full h-fit text-center py-1 border-b hover:underline' to='/account/wishlist'>My wishlist</Link>
-                        <Link className='w-full h-fit text-center py-1 border-b hover:underline' to='/account/settings'>Settings</Link>
-                        <button className='w-full h-fit text-center py-1 hover:underline text-red-500' onClick={handleLogout}>Logout</button>
-
-                    </div>
+                    <div className='absolute left-1/2 -translate-x-1/2 mx-auto top-[125%] h-fit bg-white shadow-float grid w-52 rounded px-1.5 font-medium'>
+                        <Link className='w-full h-fit text-center py-1.5 border-b hover:underline' to='/'>Home</Link>
+                        <Link className='w-full h-fit text-center py-1.5 border-b hover:underline' to='/account/orders'>My orders</Link>
+                        <Link className='w-full h-fit text-center py-1.5 border-b hover:underline' to='/account/wishlist'>My wishlist</Link>
+                        <Link className='w-full h-fit text-center py-1.5 border-b hover:underline' to='/account/settings'>Settings</Link>
+                        <button onClick={handleLogout} className="w-full h-fit text-center py-1.5 hover:underline text-red-500">Logout</button>
+                     </div>
                 }
             </div>
 

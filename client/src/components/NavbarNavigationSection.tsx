@@ -75,24 +75,24 @@ const NavbarNavigationSection = ({ Scrolled } : {Scrolled: boolean}) => {
         </> 
         }
 
-        {currentLocation.pathname === '/' || Scrolled ? <div className='relative w-7 h-7'>
+        {currentLocation.pathname === '/' || Scrolled ? <div className='w-7 h-7'>
           <IconContext.Provider value={{ color: "#383838",className: "w-7 h-7" }}>
             <button onClick={() => setSearching(prev => !prev)}>
               {Searching ? <IoMdClose /> : <AiOutlineSearch />}
             </button>
-            {Searching ? <form className="slide-bl w-fit h-fit flex flex-nowrap items-center absolute right-0 top-[125%] px-3 py-1 shadow-xxxl rounded bg-white before:absolute before:content-[''] before:-top-[5px] before:right-2 before:w-3 before:h-3 before:rotate-45 before:bg-white">
-              <input type="text" value="" placeholder='Search a product' className='h-14 w-96 flex-1 px-1 rounded-l-xl outline-none'/>
+            {Searching && <form className="w-full h-fit flex flex-nowrap items-center absolute right-0 top-full pl-3 pr-5 py-1 bg-white scale-up-ver-top border-t">
+              <input type="text" value="" placeholder='Search a product' className='h-12 w-96 flex-1 px-1 rounded-l-xl outline-none'/>
               <Link to="/search">
                 <AiOutlineSearch />
               </Link>
-            </form> : null}
+            </form>}
           </IconContext.Provider>
         </div> : null}
         
         <IconContext.Provider value={{ color: "#383838",className: "w-7 h-7" }}>
-        <Link to="/cart">
-            <AiOutlineShoppingCart />
-        </Link>
+          <Link to="/cart">
+              <AiOutlineShoppingCart />
+          </Link>
         </IconContext.Provider>
         <IconContext.Provider value={{ color: "#383838",className: "w-7 h-7" }}>
             <button onClick={() => setOpen(true)}>

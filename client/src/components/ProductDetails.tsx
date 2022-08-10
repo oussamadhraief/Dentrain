@@ -2,20 +2,19 @@ import { useState, useRef, useEffect } from 'react'
 import {IoIosArrowDown} from 'react-icons/io'
 import { IconContext } from 'react-icons'
 import { useParams } from 'react-router-dom'
-import confident from '../../assets/confident.jpg'
-import medicalScrub from '../../assets/medicalScrub.jpg'
+import confident from '../assets/product.webp'
+import medicalScrub from '../assets/product2.webp'
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
-import sizeChart from '../../assets/sizeChart.webp'
-import LoadingAnimation from '../../components/LoadingAnimation'
-import useAuth from '../../hooks/useAuth'
-import { authentication } from '../../services/authentication'
+import sizeChart from '../assets/sizeChart.webp'
+import { BsSuitHeart } from 'react-icons/bs'
+import { BsFillSuitHeartFill } from 'react-icons/bs'
+import { MdOutlineDone } from 'react-icons/md'
 
 
 const ProductDetails = () => {
 
     const { productId } = useParams()
-    const { setAuth } = useAuth()
 
     const ImageScrollerRef = useRef<HTMLDivElement>(null)
     const MainImageRef  = useRef<HTMLDivElement>(null)
@@ -27,11 +26,6 @@ const ProductDetails = () => {
     const [SelectedPantsLength, setSelectedPantsLength] = useState(0)
     const [ExpandedSizeChart, setExpandedSizeChart] = useState(false)
     const [ExpandedDescription, setExpandedDescription] = useState(false)
-    const [Loading, setLoading] = useState<boolean>(false)
-
-    useEffect(() => {
-        authentication(setLoading, setAuth)
-    },[])
     
     useEffect(() => {
         if(ImageScrollerRef.current && MainImageRef.current )
@@ -49,11 +43,9 @@ const ProductDetails = () => {
 
     }
 
-  if(Loading)
-    return <LoadingAnimation />
   return (
-    <main className='h-fit w-full py-20 flex flex-nowrap justify-center gap-10 items-start'>
-        <div className='w-1/3 h-fit flex flex-nowrap justify-end items-start gap-5 relative overflow-hidden'>
+    <div className='h-fit w-full py-20 flex flex-nowrap justify-center gap-10 items-start'>
+        <section className='w-1/3 h-fit flex flex-nowrap justify-end items-start gap-5 relative overflow-hidden'>
 
                 <div ref={ImageScrollerRef} className='productSideImageContainer grid place-content-start gap-5 removeScrollbar scroll-smooth'>
                         {ProductInfo.ProductImages.map((element,index) => <button className={index === MainImage ? "relative before:content-[''] before:inset-0 before:border-2 before:border-black before:absolute" : ""} onClick={() => handleChangeMainImage(index)}><img src={element} alt="product" className='w-full h-auto' /></button>)}
@@ -72,16 +64,35 @@ const ProductDetails = () => {
                 
 
                 </div>
-        </div>
+        </section>
         <div className='w-4/12 h-fit grid place-items-start'>
 
             <h1 className='text-3xl font-semibold mb-5 text-darkertrendygreen'>{productId}</h1>
 
-            <h2 className='text-xl mb-7 font-mono font-bold'>  $88.00</h2>
-
+            <h2 className='mb-5 poppinsFont font-bold text-lg'>  $88.00</h2>
+            <div className='flex flex-nowrap items-center gap-2 font-medium mb-5'>
+                {true ? 
+                <>
+                <IconContext.Provider value={{ className: 'text-darkertrendygreen text-xl' }}>
+                    <BsSuitHeart />
+                </IconContext.Provider>
+                Add to wishlist
+                </>
+                : 
+                <>
+                <IconContext.Provider value={{ className: 'text-red-500 text-xl' }}>
+                    <BsFillSuitHeartFill />
+                </IconContext.Provider>
+                <span className='flex items-center gap-1'>
+                    Added to wishlist
+                    <MdOutlineDone />
+                </span>
+                </>
+                }
+            </div>
             <section className='w-full mb-7'>
                 <button onClick={() => setExpandedSizeChart(prev => !prev)} className="w-full h-fit flex flex-nowrap justify-between items-center py-2">
-                    <span className='font-mono text-darkertrendygreen text-xl'>SIZE CHART</span>
+                    <span className='font-medium font-mono text-darkertrendygreen text-xl'>SIZE CHART</span>
                     <IconContext.Provider value={{className: 'w-4 h-4 text-darkertrendygreen'}}>
                         <IoIosArrowDown />
                     </IconContext.Provider>
@@ -92,26 +103,26 @@ const ProductDetails = () => {
                 </div>
             </section>
 
-            <p className='font-mono text-xl mb-1 text-darkertrendygreen'>PANTS</p>
+            <p className='poppinsFont font-bold mb-1 text-darkertrendygreen'>PANTS</p>
             <div className='w-fit h-fit flex flex-nowrap justify-start items-center gap-2'>
                 {ProductInfo.PantsType.map((item,index) => <button onClick={() => setSelectedPantsType(index)} className={SelectedPantsType === index ? 'w-24 h-10 border-2 border-trendygreen text-darkertrendygreen font-medium' : 'w-24 h-10 border border-zinc-300' }>{item}</button>)}
             </div>
 
-            <p className='font-mono text-xl mb-1 mt-7 text-darkertrendygreen'>SIZE</p>
+            <p className='poppinsFont font-bold mb-1 mt-7 text-darkertrendygreen'>SIZE</p>
             <div className='w-fit h-fit flex flex-nowrap justify-start items-center gap-2'>
                 {ProductInfo.ProductSizes.map((item,index) => <button onClick={() => setSelectedProductSize(index)} className={SelectedProductSize === index ? 'w-14 h-10 border-2 border-trendygreen text-darkertrendygreen font-medium' : 'w-14 h-10 border border-zinc-300' }>{item}</button>)}
             </div>
-            <p className='font-mono text-xl mb-1 mt-7 text-darkertrendygreen'>LENGTH</p>
+            <p className='poppinsFont font-bold mb-1 mt-7 text-darkertrendygreen'>LENGTH</p>
             <div className='w-fit h-fit flex flex-nowrap justify-start items-center gap-2'>
                 {ProductInfo.PantsLength.map((item,index) => <button onClick={() => setSelectedPantsLength(index)} className={SelectedPantsLength === index ? 'w-24 h-10 border-2 border-trendygreen text-darkertrendygreen font-medium' : 'w-24 h-10 border border-zinc-300' }>{item}</button>)}
             </div>
 
-            <button className='w-full text-center h-12 border border-darkertrendygreen text-darkertrendygreen font-medium mt-10'>Add to cart</button>
-            <button className='w-full text-center h-12 bg-darkertrendygreen text-white font-medium mt-1'>Buy it now</button>
+            <button className='w-full text-center h-12 border border-trendygreen text-trendygreen font-medium mt-10'>Add to cart</button>
+            <button className='w-full text-center h-12 bg-trendygreen text-white font-medium mt-1'>Buy it now</button>
 
             <section className='w-full my-7'>
                 <button onClick={() => setExpandedDescription(prev => !prev)} className="w-full h-fit flex flex-nowrap justify-between items-center py-2">
-                    <span className='font-mono text-darkertrendygreen text-xl'>DESCRIPTION</span>
+                    <span className='font-medium font-mono text-darkertrendygreen text-xl'>DESCRIPTION</span>
                     <IconContext.Provider value={{className: 'w-4 h-4 text-darkertrendygreen'}}>
                         <IoIosArrowDown />
                     </IconContext.Provider>
@@ -122,7 +133,8 @@ const ProductDetails = () => {
             </section>
 
         </div>
-    </main>
+        
+    </div>
   )
 }
 

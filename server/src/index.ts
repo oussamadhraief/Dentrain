@@ -17,7 +17,14 @@ import helmet from 'helmet';
 import PostController from './resources/post/post.controller'
 import UserInfoController from './resources/user/update-user-info/userinfo.controller'
 import UserAddressController from './resources/user/manage-user-address/useraddress.controller'
+import { v2 as cloudinary } from 'cloudinary'
 
+cloudinary.config({ 
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+    api_key: process.env.CLOUDINARY_API_KEY, 
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+    secure: true
+  });
 
 
     const LocalStrategy = passportLocal.Strategy
@@ -44,7 +51,7 @@ import UserAddressController from './resources/user/manage-user-address/useraddr
     }))
     app.use(cookieParser())
     app.use(bodyParser.json()); // support json encoded bodies
-    app.use(bodyParser.urlencoded({ extended: true }))
+    app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
     app.use(passport.initialize())
     app.use(passport.session())
     app.use(helmet())
@@ -52,6 +59,7 @@ import UserAddressController from './resources/user/manage-user-address/useraddr
     app.use(morgan('dev'))
     app.use(compression())
     app.use(ErrorMiddleware)
+    app.use(express.json({ limit: '50mb' }))
 
     
     //Passport
@@ -140,6 +148,41 @@ import UserAddressController from './resources/user/manage-user-address/useraddr
     app.use('/api', new UserInfoController().router)
 
     app.use('/api', new UserAddressController().router)
+
+    app.post('/api/upload', async ( req: Request, res: Response ) => {
+        try {
+            const file: string = req.body.data
+            
+            const uploadedResponse = await cloudinary.uploader.upload(file, { upload_preset: process.env.CLOUDINARY_PRESET_NAME })
+
+            res.json({ imagePublicId: uploadedResponse })
+        } catch (error) {
+
+            console.error(error)
+        }
+    })
+
+    app.post('/api/delete-image', async ( req: Request, res: Response ) => {
+        try {
+            const { publicId } = req.body
+            
+            cloudinary.uploader.destroy(publicId, function(error: any,result: any) {
+                if(result){
+
+                    res.json({ success: true, data: result.result })
+                }else{
+                    res.json({ success: false })
+                    
+                }
+                
+                
+                    
+            });
+        } catch (error) {
+
+            console.error(error)
+        }
+    })
 
 
     app.listen(process.env.PORT, () => {

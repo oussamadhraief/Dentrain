@@ -1,5 +1,4 @@
 import axios from "axios";
-import useAuth from "../hooks/useAuth";
 
 export interface Auth {
     user : {
@@ -7,11 +6,11 @@ export interface Auth {
         phone: string;
         email: string;
         role: string;
-        address: userAddress[];
+        address: UserAddress[];
     }
 }
 
-export interface userAddress {
+export interface UserAddress {
     address: string;
     detailedAddress: string;
     company: string;
@@ -26,18 +25,23 @@ export interface userAddress {
 }
 
 
-export const authentication = ( setLoading: React.Dispatch<React.SetStateAction<boolean>>, setAuth: (c: Auth | null) => void ) => {
+export const authentication = ( setAuthLoading: (c: boolean) => void, setAuth: (c: Auth | null) => void ) => {
+
+    // setAuthLoading(true)
+
     axios.get('/api/user',{
         withCredentials: true
       }).then((res) => {
           
         setAuth({user: res?.data?.user})
-        setLoading(false)
-
+        
+        setAuthLoading(false)
+        
       }).catch(() => {
-
+        
         setAuth(null)
-        setLoading(false)
+        setAuthLoading(false)
 
       })
+      
 }

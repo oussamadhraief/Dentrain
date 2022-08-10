@@ -8,7 +8,8 @@ const LandingPageHeader = () => {
   return (
     <div className="relative w-full h-fit mt-16 flex justify-around bg-trendygreen py-10">
         <div className='relative grid place-content-center'>
-            <h1 className='w-fit h-fit text-white font-bold text-4xl poppinsFont'>DRESS DIFFERENT, LOOK CONFIDENT</h1>
+            <h1 className='w-fit h-fit text-white font-bold text-4xl'>DRESS DIFFERENT, LOOK CONFIDENT</h1>
+            <h1 className='w-fit h-fit text-white font-medium text-lg mx-auto'>THE BEST FABRICS FOR THE SMALLEST PRICE</h1>
             <div className='w-full h-fit flex justify-center mt-5 flex-nowrap items-center text-white gap-3'> 
             <IconContext.Provider value={{ className: 'w-7 h-7'}}>
               <a className='hover:scale-125 transition-all' target='_blank' href="https://www.instagram.com/dentrain.uae/">

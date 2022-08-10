@@ -5,23 +5,12 @@ import BestWomenSellersSection from "../components/BestWomenSellersSection"
 import BestMenSellersSection from "../components/BestMenSellersSection"
 import confident from '../assets/confident.jpg'
 import medicalScrub from '../assets/medicalScrub.jpg'
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
-import { authentication } from "../services/authentication"
-import LoadingAnimation from "../components/LoadingAnimation"
-import useAuth from "../hooks/useAuth"
 
 
 const Home = () => {
-  
-  const { setAuth } = useAuth()
-
-  const [Loading, setLoading] = useState<boolean>(false)
-
-  useEffect(() => {
-    authentication(setLoading, setAuth)
-  },[])
 
   const handleDragStart = (e: React.FormEvent) => e.preventDefault();
 
@@ -59,36 +48,20 @@ const items = [
 </div>,
 ];
 
-  if(Loading)
-    return <LoadingAnimation />
-
-  
   return (
     <main>
         <NewestProductsSection />
         <FeaturedSection />
         <LatestCollectionSection />
         <BestWomenSellersSection />
+
+        {/* Products On sale !!!! */}
+        {/* Products On sale !!!! */}
+        {/* Products On sale !!!! */}
+        {/* Products On sale !!!! hot deals */}
+        {/* Products On sale !!!! */}
+        {/* Products On sale !!!! */}
         <BestMenSellersSection />
-        <div className="w-8/12 h-fit mx-auto">
-          <AliceCarousel
-            mouseTracking 
-            items={items} 
-            responsive={ {
-              0: {
-                items: 2,
-                          },
-                          640: {
-                              items: 3
-                          },
-                          1024: {
-                              items: 4,
-                          }
-                        }}
-            disableDotsControls
-            animationType="slide"
-          />
-        </div>
     </main>
   )
 }

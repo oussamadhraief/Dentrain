@@ -1,32 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import confident from '../../assets/confident.jpg'
 import medicalScrub from '../../assets/medicalScrub.jpg'
 import MultiRangeSlider from '../../components/MultiRangeSilder'
 import { BsFilterLeft } from 'react-icons/bs'
 import { IconContext } from 'react-icons'
 import Select from 'react-select'
-import LoadingAnimation from '../../components/LoadingAnimation'
-import { authentication } from '../../services/authentication'
-import useAuth from '../../hooks/useAuth'
 
 
 
 const MensCollections = () => {
 
-    const { setAuth } = useAuth()
-    
-    const [Loading, setLoading] = useState<boolean>(false)
     const [ShowFilters, setShowFilters] = useState<boolean>(false)
     const [SortFilter,setSortFilter] = useState<string>('')
     
-    useEffect(() => {
-        authentication(setLoading, setAuth)
-    },[])
-
-  if(Loading)
-    return <LoadingAnimation />
-
-
   return (
     <main className='w-full h-fit py-20 grid'>
         <div className='flex flex-nowrap w-9/12 h-fit mx-auto justify-between pt-6 pb-5 '>
@@ -106,52 +92,52 @@ const MensCollections = () => {
         <section className='w-9/12 h-fit mx-auto flex flex-wrap justify-start mt-5'>
                 <div className='h-fit grid place-content-start place-items-start gap-1 productsDisplayedInFlex mx-6 mt-6'>
                     <img src={confident} alt="product" className='w-full h-auto' />
-                    <h1 className='font-medium hover:underline'>Product name</h1>
+                    <h1 className='font-bold poppinsFont hover:underline'>Product name</h1>
                     <h2>80$</h2>
                 </div>
                 <div className='h-fit grid place-content-start place-items-start gap-1 productsDisplayedInFlex mx-6 mt-6'>
                     <img src={medicalScrub} alt="product" className='w-full h-auto' />
-                    <h1 className='font-medium hover:underline'>Product name</h1>
+                    <h1 className='font-bold poppinsFont hover:underline'>Product name</h1>
                     <h2>80$</h2>
                 </div>
                 <div className='h-fit grid place-content-start place-items-start gap-1 productsDisplayedInFlex mx-6 mt-6'>
                     <img src={confident} alt="product" className='w-full h-auto' />
-                    <h1 className='font-medium hover:underline'>Product name</h1>
+                    <h1 className='font-bold poppinsFont hover:underline'>Product name</h1>
                     <h2>80$</h2>
                 </div>
                 <div className='h-fit grid place-content-start place-items-start gap-1 productsDisplayedInFlex mx-6 mt-6'>
                     <img src={medicalScrub} alt="product" className='w-full h-auto' />
-                    <h1 className='font-medium hover:underline'>Product name</h1>
+                    <h1 className='font-bold poppinsFont hover:underline'>Product name</h1>
                     <h2>80$</h2>
                 </div>
                 <div className='h-fit grid place-content-start place-items-start gap-1 productsDisplayedInFlex mx-6 mt-6'>
                     <img src={confident} alt="product" className='w-full h-auto' />
-                    <h1 className='font-medium hover:underline'>Product name</h1>
+                    <h1 className='font-bold poppinsFont hover:underline'>Product name</h1>
                     <h2>80$</h2>
                 </div>
                 <div className='h-fit grid place-content-start place-items-start gap-1 productsDisplayedInFlex mx-6 mt-6'>
                     <img src={medicalScrub} alt="product" className='w-full h-auto' />
-                    <h1 className='font-medium hover:underline'>Product name</h1>
+                    <h1 className='font-bold poppinsFont hover:underline'>Product name</h1>
                     <h2>80$</h2>
                 </div>
                 <div className='h-fit grid place-content-start place-items-start gap-1 productsDisplayedInFlex mx-6 mt-6'>
                     <img src={confident} alt="product" className='w-full h-auto' />
-                    <h1 className='font-medium hover:underline'>Product name</h1>
+                    <h1 className='font-bold poppinsFont hover:underline'>Product name</h1>
                     <h2>80$</h2>
                 </div>
                 <div className='h-fit grid place-content-start place-items-start gap-1 productsDisplayedInFlex mx-6 mt-6'>
                     <img src={medicalScrub} alt="product" className='w-full h-auto' />
-                    <h1 className='font-medium hover:underline'>Product name</h1>
+                    <h1 className='font-bold poppinsFont hover:underline'>Product name</h1>
                     <h2>80$</h2>
                 </div>
                 <div className='h-fit grid place-content-start place-items-start gap-1 productsDisplayedInFlex mx-6 mt-6'>
                     <img src={confident} alt="product" className='w-full h-auto' />
-                    <h1 className='font-medium hover:underline'>Product name</h1>
+                    <h1 className='font-bold poppinsFont hover:underline'>Product name</h1>
                     <h2>80$</h2>
                 </div>
                 <div className='h-fit grid place-content-start place-items-start gap-1 productsDisplayedInFlex mx-6 mt-6'>
                     <img src={medicalScrub} alt="product" className='w-full h-auto' />
-                    <h1 className='font-medium hover:underline'>Product name</h1>
+                    <h1 className='font-bold poppinsFont hover:underline'>Product name</h1>
                     <h2>80$</h2>
                 </div>
         </section>
