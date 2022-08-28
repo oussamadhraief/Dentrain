@@ -24,6 +24,7 @@ module.exports = {
         verylighttrendygreen: "#E4FEFF",
         orange:'#F9BF87',
         pinky: '#F7B1A2',
+        yellow: '#FDD037'
       }
     },
   },

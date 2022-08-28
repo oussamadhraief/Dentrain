@@ -8,20 +8,10 @@ import {IoIosArrowDown} from 'react-icons/io'
 import sizeChart from '../../../assets/sizeChart.webp'
 import { IconContext } from 'react-icons'
 import axios from "axios"
-import {AdvancedImage, lazyload} from '@cloudinary/react';
+import {AdvancedImage, placeholder} from '@cloudinary/react';
 import {Cloudinary} from "@cloudinary/url-gen";
-import {Transformation} from "@cloudinary/url-gen";
-import {image} from "@cloudinary/url-gen/qualifiers/source";
-import {Position} from "@cloudinary/url-gen/qualifiers/position";
-import {compass} from "@cloudinary/url-gen/qualifiers/gravity";
-import {focusOn} from "@cloudinary/url-gen/qualifiers/gravity";
-import {FocusOn} from "@cloudinary/url-gen/qualifiers/focusOn";
-import {thumbnail, scale} from "@cloudinary/url-gen/actions/resize";
+import {thumbnail} from "@cloudinary/url-gen/actions/resize";
 import {byRadius} from "@cloudinary/url-gen/actions/roundCorners";
-import {sepia} from "@cloudinary/url-gen/actions/effect";
-import {source} from "@cloudinary/url-gen/actions/overlay";
-import {opacity,brightness} from "@cloudinary/url-gen/actions/adjust";
-import {byAngle} from "@cloudinary/url-gen/actions/rotate"
 
 
 interface product {
@@ -36,6 +26,11 @@ interface product {
     onSale: boolean;
 }
 
+interface ProductImages {
+    publicId: string;
+    Base64EncodedImage: string;
+}
+
 const AddProduct = () => {
 
     const cld = new Cloudinary({
@@ -46,8 +41,10 @@ const AddProduct = () => {
       
 
     const ImageScrollerRef = useRef<HTMLDivElement>(null)
+    const imageUploadInputRef = useRef<HTMLInputElement>(null)
+    const progressBarRef = useRef<HTMLProgressElement>(null)
 
-    const [ProductImages, setProductImages] = useState<string[]>([])
+    const [ProductImages, setProductImages] = useState<ProductImages[]>([])
     const [MainImage, setMainImage] = useState<number>(0)
     const [PreviewMainImage, setPreviewMainImage] = useState<number>(0)
     const [SelectedPantsType, setSelectedPantsType] = useState<number>(0)
@@ -67,12 +64,21 @@ const AddProduct = () => {
     }
 
    async  function handleImageInput(e: React.FormEvent){
+        if(imageUploadInputRef.current)
+            imageUploadInputRef.current.disabled = true
         const target = e.target as HTMLInputElement
         const files: FileList | null = target?.files
         const reader = new FileReader();
         reader.onload = async function () {
-            const pictureAlreadyAdded = ProductImages.some(item => item == reader.result)
+            const pictureAlreadyAdded = ProductImages.some(item => item.Base64EncodedImage == reader.result)
             if(reader.result && !pictureAlreadyAdded)
+                setProductImages([
+                    ...ProductImages,
+                    {
+                        publicId: '',
+                        Base64EncodedImage: reader.result as string
+                    }
+                ])
                 handleImageUpload(reader.result as string, target)
         }
         if(files)
@@ -100,8 +106,6 @@ const AddProduct = () => {
     }
 
     const handlePreviewProduct = () => {
-        console.log(ProductForm);
-        console.log(PreviewProduct);
         
         const temp = {
             name: ProductForm.name != '' ? ProductForm.name : PreviewProduct.name,
@@ -124,13 +128,22 @@ const AddProduct = () => {
             headers: {
                 "Content-Type": "application/json"
             },
-            withCredentials: true
+            withCredentials: true,
+            onUploadProgress: (progressEvent) => {
+                const percentCompleted = (progressEvent.loaded / progressEvent.total) * 100
+                progressBarRef.current?.setAttribute('value',`${percentCompleted}`)
+                if(percentCompleted == 100) {
+                    // add completed
+                }
+            }
         }).then(res => {
-            setProductImages([
-                ...ProductImages,
-                res?.data?.imagePublicId.public_id
-            ])
+            setProductImages(prev => prev.map(item => item.Base64EncodedImage == Base64EncodedImage ? {
+                ...item,
+                publicId: res?.data?.imagePublicId.public_id
+            } : item))
             target.value = ''
+            if(imageUploadInputRef.current)
+                imageUploadInputRef.current.disabled = false
         })
             
     }
@@ -141,33 +154,33 @@ const AddProduct = () => {
             <form className="w-full h-fit overflow-auto py-6 px-3 flex flex-nowrap justify-center items-start gap-8 mb-20">
                 <div className="w-1/3 h-fit flex flex-nowrap justify-end items-start gap-5 relative overflow-hidden">
                         <div className="productSideImageContainer removeScrollbar">
+
                             {ProductImages.map((item,index) => 
-                            <div key={`pic${index}`} onClick={() => handleSetMainImage(index)} className={index == MainImage ? "relative w-fit h-fit group before:content-[''] before:inset-0 before:border-[3px] before:border-trendygreen before:absolute" : "relative w-fit h-fit group rounded"}>
+                            {if(item.publicId) return (
+                            <div key={`pic${index}`} onClick={() => handleSetMainImage(index)} className={index == MainImage ? "relative w-fit h-fit group before:content-[''] before:inset-0 before:border-[3px] before:border-trendygreen before:absolute  mb-5" : "relative w-fit h-fit group rounded  mb-5"}>
                                 
-                                <AdvancedImage cldImg={cld.image(item)
-                                .resize(thumbnail().width(150).height(150).gravity(focusOn(FocusOn.face())))
-                                .roundCorners(byRadius(20))
-                                .effect(sepia())
-                                .rotate(byAngle(10))
-                                .format('png')} className="w-28 h-auto mb-5 rounded" />
+                                <img src={item.Base64EncodedImage} className="w-28 h-auto rounded" />
                                 <button type="button" onClick={e => handleRemoveProductImage(e,index)} className="w-4 h-4 absolute top-0 right-0 bg-red-500 rounded-full items-center pb-0.5 justify-center font-medium text-xs font-mono text-white hidden group-hover:flex">
                                     x
                                 </button>
 
-                            </div>
-                            )}
-                            <input type="file" name="image" className="relative flex py-5 overflow-hidden w-28 h-[165px] before:content-['+'] before:absolute before:inset-0 before:z-10 before:bg-verylighttrendygreen before:border-[1px] before:border-[#5abdbf] before:rounded before:flex before:items-center before:justify-center before:text-[#5abdbf] before:text-2xl before:hover:cursor-pointer" onChange={handleImageInput} />
+                            </div>)
+                            return (
+                                <div className="relative w-fit h-fit group rounded  mb-5">
+                                    <img key={`uploadpic${index}`} src={item.Base64EncodedImage} className="w-full" />
+                                    <div className="absolute inset-0 bg-white/60 flex items-end pb-5 justify-center flex-nowrap">
+                                        <progress ref={progressBarRef} value={0} max={100} className='uploadToCloudinaryProgressBar' ></progress>
+                                    </div>
+                                </div> 
+                            )
+                            })}
+                            <input ref={imageUploadInputRef} type="file" name="image" className="relative flex py-5 overflow-hidden w-28 h-[165px] before:content-['+'] before:absolute before:inset-0 before:z-10 before:bg-verylighttrendygreen before:border-[1px] before:border-[#5abdbf] before:rounded before:flex before:items-center before:justify-center before:text-[#5abdbf] before:text-2xl before:hover:cursor-pointer" onChange={handleImageInput} />
                         </div>
                     <div className="productMainImageContainer">
                     {ProductImages.length > 0 ? 
                     <Zoom>
                         
-                        <AdvancedImage cldImg={cld.image('Dentrain/dali_-_Copy_zn750p')
-                                .resize(thumbnail().width(150).height(150).gravity(focusOn(FocusOn.face())))
-                                .roundCorners(byRadius(20))
-                                .effect(sepia())
-                                .rotate(byAngle(10))
-                                .format('png')} className='w-full h-auto' />
+                        <img src={ProductImages[MainImage].Base64EncodedImage} className='w-full h-auto' />
                     </Zoom> :
                     <img src={preview} alt="product" className='w-full h-auto' />
                         }
@@ -185,7 +198,7 @@ const AddProduct = () => {
                     </label>
 
                     <label className="w-full h-fit font-medium text-black grid mt-5">
-                        Price &#40;$&#41;
+                        <p className="flex gap-1 items-center">Price <span className="text-xs text-darkgray">in USD</span>  </p> 
                         <input type="number" name="price" value={ProductForm.price} onChange={handleChange} className="w-full border h-9 outline-none removeArrowButtons" />
                     </label>
 

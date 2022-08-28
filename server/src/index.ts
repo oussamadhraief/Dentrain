@@ -18,6 +18,12 @@ import PostController from './resources/post/post.controller'
 import UserInfoController from './resources/user/update-user-info/userinfo.controller'
 import UserAddressController from './resources/user/manage-user-address/useraddress.controller'
 import { v2 as cloudinary } from 'cloudinary'
+// const stripe = require('stripe')(STRIPE_PRIVATE_KEY)
+
+const storeItems = new Map([
+    [1, { priceInCents: 10000, name: "Learn React Today" }],
+    [2, { priceInCents: 20000, name: "Learn CSS Today" }],
+])
 
 cloudinary.config({ 
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 

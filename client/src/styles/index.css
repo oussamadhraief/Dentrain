@@ -284,7 +284,7 @@ code {
 
 .slider__track,
 .slider__range {
-  border-radius: 3px;
+  border-radius: 4px;
   height: 5px;
 }
 
@@ -649,28 +649,28 @@ code {
   display: none;
   top: -75%;
   background-image:  
-  radial-gradient(circle, #ef4444 20%, transparent 20%),
-  radial-gradient(circle,  transparent 20%, #ef4444 20%, transparent 30%),
-  radial-gradient(circle, #ef4444 20%, transparent 20%), 
-  radial-gradient(circle, #ef4444 20%, transparent 20%),
-  radial-gradient(circle,  transparent 10%, #ef4444 15%, transparent 20%),
-  radial-gradient(circle, #ef4444 20%, transparent 20%),
-  radial-gradient(circle, #ef4444 20%, transparent 20%),
-  radial-gradient(circle, #ef4444 20%, transparent 20%),
-  radial-gradient(circle, #ef4444 20%, transparent 20%);
+  radial-gradient(circle, #ef4444 10%, transparent 10%),
+  radial-gradient(circle,  transparent 10%, #ef4444 10%, transparent 30%),
+  radial-gradient(circle, #ef4444 10%, transparent 10%), 
+  radial-gradient(circle, #ef4444 10%, transparent 10%),
+  radial-gradient(circle,  transparent 10%, #ef4444 15%, transparent 10%),
+  radial-gradient(circle, #ef4444 10%, transparent 10%),
+  radial-gradient(circle, #ef4444 10%, transparent 10%),
+  radial-gradient(circle, #ef4444 10%, transparent 10%),
+  radial-gradient(circle, #ef4444 10%, transparent 10%);
 background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%, 10% 10%, 18% 18%;
 }
 .bubbly-button:after{
   display: none;
   bottom: -75%;
   background-image:  
-  radial-gradient(circle, #ef4444 20%, transparent 20%), 
-  radial-gradient(circle, #ef4444 20%, transparent 20%),
-  radial-gradient(circle,  transparent 10%, #ef4444 15%, transparent 20%),
-  radial-gradient(circle, #ef4444 20%, transparent 20%),
-  radial-gradient(circle, #ef4444 20%, transparent 20%),
-  radial-gradient(circle, #ef4444 20%, transparent 20%),
-  radial-gradient(circle, #ef4444 20%, transparent 20%);
+  radial-gradient(circle, #ef4444 10%, transparent 10%), 
+  radial-gradient(circle, #ef4444 10%, transparent 10%),
+  radial-gradient(circle,  transparent 10%, #ef4444 15%, transparent 10%),
+  radial-gradient(circle, #ef4444 10%, transparent 10%),
+  radial-gradient(circle, #ef4444 10%, transparent 10%),
+  radial-gradient(circle, #ef4444 10%, transparent 10%),
+  radial-gradient(circle, #ef4444 10%, transparent 10%);
 background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%, 20% 20%;
 }
 
@@ -711,6 +711,64 @@ background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%, 20% 20%;
     background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%, 110% 10%;
   background-size: 0% 0%, 0% 0%,  0% 0%,  0% 0%,  0% 0%,  0% 0%;
   }
+}
+
+
+.uploadToCloudinaryProgressBar {
+  position: relative;
+  display: block;
+  width: 95%;
+  height: 10px;
+  -webkit-transition : width 5s ease;
+  -moz-transition : width 5s ease;
+  -o-transition : width 5s ease;
+  transition : width 5s ease;
+  border: none;
+  background-color: rgba(238, 238, 238, 0.509);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.uploadToCloudinaryProgressBar::-webkit-progress-bar {
+  position: relative;
+  display: block;
+  width: 95%;
+  height: 10px;
+  -webkit-transition : width 5s ease;
+  -moz-transition : width 5s ease;
+  -o-transition : width 5s ease;
+  transition : width 5s ease;
+  border: none;
+  background-color: rgba(238, 238, 238, 0.509);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.uploadToCloudinaryProgressBar::-moz-progress-bar {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 10px;
+  -webkit-transition : width 5s ease;
+  -moz-transition : width 5s ease;
+  -o-transition : width 5s ease;
+  transition : width 5s ease;
+  border: none;
+  background-color: rgba(238, 238, 238, 0.509);
+  border-radius: 4px;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  background: linear-gradient(90deg, rgba(20,177,192,1) 0%, rgba(20,177,192,1) 71%, rgba(24,197,187,1) 100%);
+
+}
+
+.uploadToCloudinaryProgressBar::-webkit-progress-value {
+  background: linear-gradient(90deg, rgba(20,177,192,1) 0%, rgba(20,177,192,1) 71%, rgba(24,197,187,1) 100%);
+  -webkit-transition : width 0.3s ease;
+  -moz-transition : width 0.3s ease;
+  -o-transition : width 0.3s ease;
+  transition : width 0.3s ease;
 }
 
 /* ----------------------------------------------
